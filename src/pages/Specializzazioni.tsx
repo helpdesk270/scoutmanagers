@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { Award, ChevronRight, CheckCircle, Lock, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface Specialization {
   id: string;
@@ -168,6 +169,7 @@ const Specializzazioni = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedSpecialization, setSelectedSpecialization] = useState<Specialization | null>(null);
+  const isMobile = useIsMobile();
 
   const filteredSpecializations = specializations.filter((spec) => {
     const matchesSearch = spec.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -182,51 +184,51 @@ const Specializzazioni = () => {
   const totalProgress = specializations.reduce((acc, spec) => acc + spec.progress, 0) / specializations.length;
 
   return (
-    <div className="container animate-fade-in space-y-6 py-8">
+    <div className="container animate-fade-in space-y-4 sm:space-y-6 py-4 sm:py-8">
       <header className="space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight">Specializzazioni</h1>
-        <p className="text-muted-foreground">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Specializzazioni</h1>
+        <p className="text-sm sm:text-base text-muted-foreground">
           Sviluppa le tue competenze e guadagna distintivi
         </p>
       </header>
 
       <Card>
-        <CardContent className="p-6">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
-            <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">Progresso totale</p>
+        <CardContent className="p-4 sm:p-6">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-6">
+            <div className="space-y-1 sm:space-y-2">
+              <p className="text-xs sm:text-sm text-muted-foreground">Progresso totale</p>
               <div className="flex items-end justify-between">
-                <span className="text-2xl font-bold">{Math.round(totalProgress)}%</span>
-                <Progress value={totalProgress} className="h-2 w-full max-w-[180px]" />
+                <span className="text-lg sm:text-2xl font-bold">{Math.round(totalProgress)}%</span>
+                <Progress value={totalProgress} className="h-2 w-full max-w-[100px] sm:max-w-[180px]" />
               </div>
             </div>
-            <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">Completate</p>
+            <div className="space-y-1 sm:space-y-2">
+              <p className="text-xs sm:text-sm text-muted-foreground">Completate</p>
               <div className="flex items-center space-x-2">
-                <span className="text-2xl font-bold">{completedSpecializations}</span>
-                <CheckCircle className="h-5 w-5 text-scout-green" />
+                <span className="text-lg sm:text-2xl font-bold">{completedSpecializations}</span>
+                <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-scout-green" />
               </div>
             </div>
-            <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">In corso</p>
+            <div className="space-y-1 sm:space-y-2">
+              <p className="text-xs sm:text-sm text-muted-foreground">In corso</p>
               <div className="flex items-center space-x-2">
-                <span className="text-2xl font-bold">{inProgressSpecializations}</span>
-                <Award className="h-5 w-5 text-scout-orange" />
+                <span className="text-lg sm:text-2xl font-bold">{inProgressSpecializations}</span>
+                <Award className="h-4 w-4 sm:h-5 sm:w-5 text-scout-orange" />
               </div>
             </div>
-            <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">Da sbloccare</p>
+            <div className="space-y-1 sm:space-y-2">
+              <p className="text-xs sm:text-sm text-muted-foreground">Da sbloccare</p>
               <div className="flex items-center space-x-2">
-                <span className="text-2xl font-bold">{lockedSpecializations}</span>
-                <Lock className="h-5 w-5 text-scout-blue" />
+                <span className="text-lg sm:text-2xl font-bold">{lockedSpecializations}</span>
+                <Lock className="h-4 w-4 sm:h-5 sm:w-5 text-scout-blue" />
               </div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
-        <div className="relative max-w-sm">
+      <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+        <div className="relative w-full max-w-[100%] sm:max-w-sm">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             type="search"
@@ -241,18 +243,18 @@ const Specializzazioni = () => {
           onValueChange={setSelectedCategory}
           className="w-full sm:w-auto"
         >
-          <TabsList>
+          <TabsList className="w-full grid-cols-3 sm:w-auto sm:grid-cols-6">
             <TabsTrigger value="all">Tutte</TabsTrigger>
-            <TabsTrigger value="Natura">Natura</TabsTrigger>
+            {!isMobile && <TabsTrigger value="Natura">Natura</TabsTrigger>}
             <TabsTrigger value="Tecnica">Tecnica</TabsTrigger>
             <TabsTrigger value="Servizio">Servizio</TabsTrigger>
-            <TabsTrigger value="Arte">Arte</TabsTrigger>
-            <TabsTrigger value="Spirituale">Spirituale</TabsTrigger>
+            {!isMobile && <TabsTrigger value="Arte">Arte</TabsTrigger>}
+            {!isMobile && <TabsTrigger value="Spirituale">Spirituale</TabsTrigger>}
           </TabsList>
         </Tabs>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filteredSpecializations.map((spec) => (
           <Card
             key={spec.id}
@@ -271,14 +273,14 @@ const Specializzazioni = () => {
               <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50" />
               {spec.isLocked && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm">
-                  <div className="rounded-full bg-black/50 p-3">
-                    <Lock className="h-8 w-8 text-white" />
+                  <div className="rounded-full bg-black/50 p-2 sm:p-3">
+                    <Lock className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                   </div>
                 </div>
               )}
               <Badge
                 className={cn(
-                  "absolute right-2 top-2",
+                  "absolute right-2 top-2 text-xs",
                   spec.category === "Natura" && "bg-scout-green",
                   spec.category === "Arte" && "bg-scout-purple",
                   spec.category === "Servizio" && "bg-scout-red",
@@ -289,38 +291,38 @@ const Specializzazioni = () => {
                 {spec.category}
               </Badge>
             </div>
-            <CardHeader className="pb-2">
+            <CardHeader className="px-3 py-2 sm:px-6 sm:pb-2">
               <div className="flex items-start justify-between">
-                <CardTitle>{spec.name}</CardTitle>
+                <CardTitle className="text-base sm:text-lg">{spec.name}</CardTitle>
                 <div className="flex items-center space-x-1 rounded-full bg-muted px-2 py-1 text-xs">
                   <span>Livello {spec.level}</span>
                   <span>/</span>
                   <span>{spec.maxLevel}</span>
                 </div>
               </div>
-              <CardDescription>{spec.description}</CardDescription>
+              <CardDescription className="text-xs sm:text-sm">{spec.description}</CardDescription>
             </CardHeader>
-            <CardContent className="pb-2">
-              <div className="space-y-2">
+            <CardContent className="px-3 sm:px-6 pb-2">
+              <div className="space-y-1 sm:space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-sm text-muted-foreground">Progresso</span>
-                  <span className="text-sm font-medium">{spec.progress}%</span>
+                  <span className="text-xs sm:text-sm text-muted-foreground">Progresso</span>
+                  <span className="text-xs sm:text-sm font-medium">{spec.progress}%</span>
                 </div>
                 <Progress 
                   value={spec.progress} 
-                  className="h-2"
+                  className="h-1.5 sm:h-2"
                   indicatorClassName={cn(spec.color)} 
                 />
               </div>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="px-3 sm:px-6 py-2">
               <Button
                 variant="ghost"
-                className="w-full justify-between"
+                className="w-full justify-between text-xs sm:text-sm"
                 disabled={spec.isLocked}
               >
                 {spec.isLocked ? "Bloccata" : "Dettagli"}
-                <ChevronRight className="h-4 w-4" />
+                <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4" />
               </Button>
             </CardFooter>
           </Card>
