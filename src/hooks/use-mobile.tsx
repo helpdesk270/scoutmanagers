@@ -8,11 +8,12 @@ export function useIsMobile() {
 
   React.useEffect(() => {
     // Initial check
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    const checkMobile = () => window.innerWidth < MOBILE_BREAKPOINT
+    setIsMobile(checkMobile())
     
     // Handler for window resize
     const handleResize = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+      setIsMobile(checkMobile())
     }
 
     // Add event listener with debounce

@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,7 @@ import {
   BookOpen
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface SidebarProps {
   children: React.ReactNode;
@@ -27,7 +28,15 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ children }) => {
   const { user, logout } = useAuth();
   const location = useLocation();
+  const isMobile = useIsMobile();
   const [collapsed, setCollapsed] = useState(false);
+  
+  // Auto-collapse sidebar on mobile
+  useEffect(() => {
+    if (isMobile) {
+      setCollapsed(true);
+    }
+  }, [isMobile]);
 
   const navigationItems = [
     {
@@ -136,6 +145,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
                     ? "bg-primary text-primary-foreground"
                     : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                 )}
+                onClick={() => isMobile && setCollapsed(true)}
               >
                 {item.icon}
                 {!collapsed && <span className="ml-3">{item.title}</span>}

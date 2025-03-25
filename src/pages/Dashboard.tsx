@@ -345,7 +345,7 @@ const Dashboard = () => {
                         <p className="text-xs sm:text-sm font-medium">{spec.name}</p>
                         <p className="text-[10px] sm:text-xs text-muted-foreground">{spec.level}</p>
                       </div>
-                      <style jsx>
+                      <style>
                         {`.${spec.color.replace('bg-', '')}::after {
                           width: ${spec.progress}%;
                           background: ${spec.color.replace('bg-', '')};
