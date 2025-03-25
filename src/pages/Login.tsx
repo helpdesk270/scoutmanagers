@@ -39,15 +39,15 @@ const Login = () => {
     <div className="flex min-h-screen flex-col items-center justify-center px-4 py-12 animate-fade-in">
       <div className="w-full max-w-md space-y-6">
         <div className="flex flex-col items-center space-y-2 text-center">
-          <div className="relative h-24 w-24 overflow-hidden rounded-full bg-primary/10 p-2">
+          <div className="relative h-32 w-32 overflow-hidden p-2">
             <img 
-              src="/lovable-uploads/c773e33a-db69-4582-aa20-c0235f627a11.png" 
-              alt="Logo Scout" 
+              src="/lovable-uploads/a7a65f60-faab-465f-a5cf-09cf39dde5c0.png" 
+              alt="Logo Club Comando Celeste" 
               className="h-full w-full object-contain animate-float"
             />
           </div>
           <h1 className="text-3xl font-bold tracking-tight text-primary">
-            Associazione Italiana Scout Avventista
+            Club Comando Celeste
           </h1>
           <p className="text-muted-foreground">
             Sistema di gestione per gli scout avventisti

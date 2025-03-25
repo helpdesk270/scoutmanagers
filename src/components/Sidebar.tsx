@@ -111,23 +111,31 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         )}
       >
         <div className="flex h-16 items-center justify-between px-4">
-          {!collapsed && (
+          {!collapsed ? (
             <div className="flex items-center gap-2">
-              <div className="h-8 w-8 overflow-hidden rounded-full bg-primary/20">
+              <div className="h-8 w-8 overflow-hidden rounded-full">
                 <img
-                  src="/lovable-uploads/c773e33a-db69-4582-aa20-c0235f627a11.png"
-                  alt="Logo"
+                  src="/lovable-uploads/a7a65f60-faab-465f-a5cf-09cf39dde5c0.png"
+                  alt="Logo Club Comando Celeste"
                   className="h-full w-full object-contain"
                 />
               </div>
-              <span className="font-semibold">Scout Avventista</span>
+              <span className="font-semibold">Club Comando Celeste</span>
+            </div>
+          ) : (
+            <div className="mx-auto h-8 w-8 overflow-hidden rounded-full">
+              <img
+                src="/lovable-uploads/a7a65f60-faab-465f-a5cf-09cf39dde5c0.png"
+                alt="Logo"
+                className="h-full w-full object-contain"
+              />
             </div>
           )}
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setCollapsed(!collapsed)}
-            className="ml-auto"
+            className={collapsed ? "ml-auto" : ""}
           >
             <Menu className="h-5 w-5" />
           </Button>
