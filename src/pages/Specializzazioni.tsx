@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,7 +10,6 @@ import { Award, ChevronRight, CheckCircle, Lock, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
-// Define the specialization interface
 interface Specialization {
   id: string;
   name: string;
@@ -26,7 +24,6 @@ interface Specialization {
   isLocked: boolean;
 }
 
-// Mock specializations data
 const specializations: Specialization[] = [
   {
     id: "1",
@@ -172,7 +169,6 @@ const Specializzazioni = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedSpecialization, setSelectedSpecialization] = useState<Specialization | null>(null);
 
-  // Filter specializations based on search and category
   const filteredSpecializations = specializations.filter((spec) => {
     const matchesSearch = spec.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                           spec.description.toLowerCase().includes(searchTerm.toLowerCase());
@@ -180,7 +176,6 @@ const Specializzazioni = () => {
     return matchesSearch && matchesCategory;
   });
 
-  // Calculate completion statistics
   const completedSpecializations = specializations.filter(spec => spec.progress === 100).length;
   const inProgressSpecializations = specializations.filter(spec => spec.progress > 0 && spec.progress < 100).length;
   const lockedSpecializations = specializations.filter(spec => spec.isLocked).length;
@@ -195,7 +190,6 @@ const Specializzazioni = () => {
         </p>
       </header>
 
-      {/* Overview card */}
       <Card>
         <CardContent className="p-6">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
@@ -231,7 +225,6 @@ const Specializzazioni = () => {
         </CardContent>
       </Card>
 
-      {/* Search and filter */}
       <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
         <div className="relative max-w-sm">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -259,7 +252,6 @@ const Specializzazioni = () => {
         </Tabs>
       </div>
 
-      {/* Specialization list */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filteredSpecializations.map((spec) => (
           <Card
@@ -347,7 +339,6 @@ const Specializzazioni = () => {
         </div>
       )}
 
-      {/* Admin/Director controls */}
       {(user?.role === "admin" || user?.role === "direttore" || user?.role === "animatore") && (
         <Card>
           <CardHeader>

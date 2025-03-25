@@ -335,17 +335,17 @@ const Dashboard = () => {
                     <div key={spec.id} className="flex items-center space-x-3">
                       <div className={cn("progress-badge", spec.color)}>
                         <div className="z-20 text-sm font-medium">{spec.progress}%</div>
-                        <style jsx>{`
-                          .${spec.color}::after {
-                            width: ${spec.progress}%;
-                            background: ${spec.color.replace('bg-', '')};
-                          }
-                        `}</style>
                       </div>
                       <div>
                         <p className="font-medium">{spec.name}</p>
                         <p className="text-xs text-muted-foreground">{spec.level}</p>
                       </div>
+                      <style>
+                        {`.${spec.color.replace('bg-', '')}::after {
+                          width: ${spec.progress}%;
+                          background: ${spec.color.replace('bg-', '')};
+                        }`}
+                      </style>
                     </div>
                   ))}
                 </div>

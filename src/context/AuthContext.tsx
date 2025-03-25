@@ -14,8 +14,19 @@ export interface User {
   avatarUrl?: string;
 }
 
+// Mock user type including password for internal use
+interface MockUser {
+  id: string;
+  email: string;
+  password: string;
+  name: string;
+  role: UserRole;
+  unitName?: string;
+  avatarUrl: string;
+}
+
 // Mock data for initial testing
-const MOCK_USERS = [
+const MOCK_USERS: MockUser[] = [
   {
     id: "1",
     email: "admin@scout.it",
@@ -148,6 +159,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       MOCK_USERS.push({
         ...newUser,
         password: userData.password,
+        avatarUrl: newUser.avatarUrl || "/placeholder.svg",
       });
 
       // Log in the user automatically
