@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -34,7 +35,7 @@ const specializations: Specialization[] = [
     level: 2,
     maxLevel: 3,
     progress: 65,
-    imageUrl: "/placeholder.svg",
+    imageUrl: "/lovable-uploads/5a8bf83b-33ac-4043-97e0-3dc4195f776d.png",
     color: "bg-scout-blue",
     requirements: [
       "Saper leggere una mappa topografica",
@@ -45,103 +46,103 @@ const specializations: Specialization[] = [
   },
   {
     id: "2",
-    name: "Primo soccorso",
-    description: "Apprendi le tecniche di base del primo soccorso",
+    name: "Cuoco",
+    description: "Apprendi le tecniche di base della cucina",
     category: "Servizio",
     level: 1,
     maxLevel: 3,
     progress: 30,
-    imageUrl: "/placeholder.svg",
-    color: "bg-scout-red",
+    imageUrl: "/lovable-uploads/a4a9c84c-b5c0-4b04-8e59-65187e7638ba.png",
+    color: "bg-scout-purple",
     requirements: [
-      "Conoscere le basi del primo soccorso",
-      "Saper gestire una situazione di emergenza",
-      "Conoscere i numeri di emergenza"
+      "Preparare un pasto completo per il gruppo",
+      "Conoscere le tecniche di cottura di base",
+      "Saper gestire una cucina da campo"
     ],
     isLocked: false
   },
   {
     id: "3",
-    name: "Natura e animali",
-    description: "Scopri la flora e la fauna del territorio",
+    name: "Giardiniere",
+    description: "Scopri come prenderti cura delle piante",
     category: "Natura",
     level: 3,
     maxLevel: 3,
     progress: 100,
-    imageUrl: "/placeholder.svg",
-    color: "bg-scout-green",
+    imageUrl: "/lovable-uploads/cb1896da-80bb-4fa4-ba73-70fc33551b2c.png",
+    color: "bg-scout-yellow",
     requirements: [
-      "Identificare 10 specie di piante",
-      "Identificare 10 specie di animali",
-      "Preparare una presentazione sulla biodiversità"
+      "Coltivare un piccolo orto",
+      "Conoscere i principi base di giardinaggio",
+      "Prendersi cura di almeno 3 tipi di piante diversi"
     ],
     isLocked: false
   },
   {
     id: "4",
-    name: "Arte e creatività",
-    description: "Sviluppa le tue abilità artistiche",
+    name: "Cortesia",
+    description: "Sviluppa le buone maniere e l'educazione",
     category: "Arte",
     level: 1,
     maxLevel: 3,
     progress: 20,
-    imageUrl: "/placeholder.svg",
-    color: "bg-scout-purple",
+    imageUrl: "/lovable-uploads/33c06b28-4bba-4755-ba53-2b0e1d2ae42e.png",
+    color: "bg-scout-yellow",
     requirements: [
-      "Creare un'opera d'arte originale",
-      "Partecipare a un workshop creativo",
-      "Organizzare una mostra per il gruppo"
+      "Conoscere le regole di base del galateo",
+      "Dimostrare comportamento rispettoso verso tutti",
+      "Aiutare chi è in difficoltà"
     ],
     isLocked: false
   },
   {
     id: "5",
-    name: "Vita all'aperto",
-    description: "Impara a sopravvivere e vivere nella natura",
+    name: "Lavori domestici",
+    description: "Impara a gestire i lavori di casa",
     category: "Tecnica",
     level: 2,
     maxLevel: 3,
     progress: 70,
-    imageUrl: "/placeholder.svg",
-    color: "bg-scout-orange",
+    imageUrl: "/lovable-uploads/8b1a20f2-b941-4c40-9540-e17364b14079.png",
+    color: "bg-scout-red",
     requirements: [
-      "Montare una tenda correttamente",
-      "Accendere un fuoco in sicurezza",
-      "Preparare un pasto all'aperto"
+      "Saper pulire correttamente una stanza",
+      "Conoscere i prodotti per la pulizia",
+      "Organizzare efficacemente uno spazio"
     ],
     isLocked: false
   },
   {
     id: "6",
-    name: "Studio della Bibbia",
-    description: "Approfondisci la conoscenza delle Scritture",
+    name: "Igiene",
+    description: "Approfondisci le conoscenze sull'igiene personale",
     category: "Spirituale",
     level: 1,
     maxLevel: 3,
     progress: 45,
-    imageUrl: "/placeholder.svg",
-    color: "bg-scout-yellow",
+    imageUrl: "/lovable-uploads/65fbed9c-ff24-4f7a-a5bb-56036540158d.png",
+    color: "bg-scout-blue",
     requirements: [
-      "Leggere regolarmente la Bibbia",
-      "Partecipare a uno studio biblico",
-      "Preparare una riflessione spirituale"
+      "Conoscere le regole dell'igiene personale",
+      "Mantenere una corretta igiene durante i campi",
+      "Organizzare un angolo di pulizia"
     ],
     isLocked: false
   },
   {
     id: "7",
-    name: "Comunicazione",
-    description: "Sviluppa le tue capacità comunicative",
+    name: "Cucito",
+    description: "Sviluppa le competenze di base del cucito",
     category: "Servizio",
     level: 0,
     maxLevel: 3,
     progress: 0,
-    imageUrl: "/placeholder.svg",
-    color: "bg-scout-blue",
+    imageUrl: "/lovable-uploads/5a8bf83b-33ac-4043-97e0-3dc4195f776d.png",
+    color: "bg-scout-red",
     requirements: [
-      "Fare una presentazione di 5 minuti",
-      "Scrivere un articolo per il giornalino scout",
-      "Condurre una discussione di gruppo"
+      "Saper cucire un bottone",
+      "Eseguire riparazioni di base a vestiti",
+      "Creare un piccolo progetto di cucito"
     ],
     isLocked: true
   },
@@ -184,7 +185,7 @@ const Specializzazioni = () => {
   const totalProgress = specializations.reduce((acc, spec) => acc + spec.progress, 0) / specializations.length;
 
   return (
-    <div className="container animate-fade-in space-y-4 sm:space-y-6 py-4 sm:py-8">
+    <div className="container animate-fade-in space-y-4 sm:space-y-6 py-4 sm:py-8 pb-20 md:pb-8">
       <header className="space-y-2">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Specializzazioni</h1>
         <p className="text-sm sm:text-base text-muted-foreground">
@@ -264,13 +265,17 @@ const Specializzazioni = () => {
             )}
             onClick={() => setSelectedSpecialization(spec)}
           >
-            <div className="relative aspect-[3/2] overflow-hidden bg-muted">
-              <img
-                src={spec.imageUrl}
-                alt={spec.name}
-                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50" />
+            <div className="relative aspect-[1/1] sm:aspect-[3/2] overflow-hidden bg-muted flex items-center justify-center">
+              {/* Badge image */}
+              <div className="w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center p-4">
+                <img
+                  src={spec.imageUrl}
+                  alt={spec.name}
+                  className="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+              
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30" />
               {spec.isLocked && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm">
                   <div className="rounded-full bg-black/50 p-2 sm:p-3">
