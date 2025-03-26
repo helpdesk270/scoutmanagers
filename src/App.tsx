@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,6 +12,7 @@ import Login from "./pages/Login";
 import Registrazione from "./pages/Registrazione";
 import Dashboard from "./pages/Dashboard";
 import Specializzazioni from "./pages/Specializzazioni";
+import Membri from "./pages/Membri";
 import AccessoDenied from "./pages/AccessoDenied";
 import NotFound from "./pages/NotFound";
 
@@ -53,6 +53,13 @@ const App = () => (
                 </Sidebar>
               </ProtectedRoute>
             } />
+            <Route path="/membri" element={
+              <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
+                <Sidebar>
+                  <Membri />
+                </Sidebar>
+              </ProtectedRoute>
+            } />
             
             {/* Placeholder routes for future implementation */}
             <Route path="/attivita" element={
@@ -70,16 +77,6 @@ const App = () => (
                 <Sidebar>
                   <div className="container py-8">
                     <h1 className="text-3xl font-bold">Biblioteca</h1>
-                    <p className="text-muted-foreground mt-2">Pagina in costruzione</p>
-                  </div>
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/membri" element={
-              <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
-                <Sidebar>
-                  <div className="container py-8">
-                    <h1 className="text-3xl font-bold">Membri</h1>
                     <p className="text-muted-foreground mt-2">Pagina in costruzione</p>
                   </div>
                 </Sidebar>
