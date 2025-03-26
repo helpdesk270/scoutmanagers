@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // Interface for specialization data
 interface Specialization {
@@ -137,20 +138,42 @@ const Dashboard = () => {
     return <div>Caricamento...</div>;
   }
 
+  // Get user initials for avatar fallback
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map(n => n[0])
+      .join("")
+      .toUpperCase();
+  };
+
   return (
     <div className="container animate-fade-in space-y-4 py-4 sm:space-y-6 sm:py-8">
       {/* Welcome header */}
-      <header className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
-        <div>
-          <h1 className="text-xl font-bold tracking-tight sm:text-3xl">
-            Benvenuto, {user.name}!
-          </h1>
-          <p className="text-xs sm:text-sm text-muted-foreground">
-            {user.unitName && `Unità: ${user.unitName} • `}
-            <span className="capitalize">{user.role}</span>
-          </p>
+      <header className="space-y-4">
+        {/* User info section - Moved to top */}
+        <div className="flex items-center space-x-3">
+          <Avatar className="h-12 w-12 border border-border">
+            <AvatarImage src={user.avatarUrl} alt={user.name} />
+            <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
+          </Avatar>
+          <div>
+            <h1 className="text-xl font-bold tracking-tight sm:text-3xl">
+              {user.name}
+            </h1>
+            <p className="text-xs sm:text-sm text-muted-foreground capitalize">
+              {user.role}
+            </p>
+          </div>
         </div>
-        <div className="flex items-center space-x-2">
+        
+        {/* Date Badge - Moved below user info */}
+        <div className="flex justify-between items-center">
+          <div>
+            <p className="text-sm text-muted-foreground">
+              {user.unitName && `Unità: ${user.unitName}`}
+            </p>
+          </div>
           <Badge variant="outline" className="text-xs uppercase text-scout-blue">
             {new Date().toLocaleDateString("it-IT", { 
               weekday: isMobile ? undefined : "long", 
@@ -416,4 +439,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
