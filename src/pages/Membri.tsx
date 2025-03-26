@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useAuth, User, UserRole } from "@/context/AuthContext";
 import { 
@@ -21,13 +20,16 @@ import {
   Calendar,
   Search,
   Plus,
-  X
+  X,
+  MoreVertical,
+  ChevronRight
 } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import MemberForm from "@/components/members/MemberForm";
 import MemberAchievements from "@/components/members/MemberAchievements";
 import MemberAttendance from "@/components/members/MemberAttendance";
 
-// Mock data structure for members
 export interface MemberType extends User {
   achievements: Achievement[];
   attendance: AttendanceRecord[];
@@ -50,6 +52,7 @@ export interface AttendanceRecord {
 const Membri = () => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const isMobile = useIsMobile();
   const [members, setMembers] = useState<MemberType[]>([]);
   const [filteredMembers, setFilteredMembers] = useState<MemberType[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -59,9 +62,7 @@ const Membri = () => {
   const [viewMode, setViewMode] = useState<"list" | "achievements" | "attendance">("list");
   const [selectedMember, setSelectedMember] = useState<MemberType | null>(null);
 
-  // Initialize with mock data
   React.useEffect(() => {
-    // In a real app, this would fetch from an API
     const mockMembers: MemberType[] = [
       {
         id: "1",
@@ -133,7 +134,6 @@ const Membri = () => {
     setFilteredMembers(mockMembers);
   }, []);
 
-  // Search functionality
   const handleSearch = (query: string) => {
     setSearchQuery(query);
     const filtered = members.filter(member => 
@@ -144,7 +144,6 @@ const Membri = () => {
     setFilteredMembers(filtered);
   };
 
-  // Add new member
   const handleAddMember = (newMember: Omit<MemberType, "id" | "achievements" | "attendance">) => {
     const member: MemberType = {
       ...newMember,
@@ -163,7 +162,6 @@ const Membri = () => {
     });
   };
 
-  // Update member
   const handleUpdateMember = (updatedMember: MemberType) => {
     const updatedMembers = members.map(member => 
       member.id === updatedMember.id ? updatedMember : member
@@ -179,7 +177,6 @@ const Membri = () => {
     });
   };
 
-  // Delete member
   const handleDeleteMember = (id: string) => {
     const memberToDelete = members.find(m => m.id === id);
     const updatedMembers = members.filter(member => member.id !== id);
@@ -194,7 +191,6 @@ const Membri = () => {
     });
   };
 
-  // Add achievement to member
   const handleAddAchievement = (memberId: string, achievement: Omit<Achievement, "id">) => {
     const newAchievement: Achievement = {
       ...achievement,
@@ -214,7 +210,6 @@ const Membri = () => {
     setMembers(updatedMembers);
     setFilteredMembers(updatedMembers);
     
-    // Update selected member if we're viewing their achievements
     if (selectedMember && selectedMember.id === memberId) {
       setSelectedMember({
         ...selectedMember,
@@ -228,7 +223,6 @@ const Membri = () => {
     });
   };
 
-  // Add attendance record to member
   const handleAddAttendance = (memberId: string, record: Omit<AttendanceRecord, "id">) => {
     const newRecord: AttendanceRecord = {
       ...record,
@@ -248,7 +242,6 @@ const Membri = () => {
     setMembers(updatedMembers);
     setFilteredMembers(updatedMembers);
     
-    // Update selected member if we're viewing their attendance
     if (selectedMember && selectedMember.id === memberId) {
       setSelectedMember({
         ...selectedMember,
@@ -262,19 +255,16 @@ const Membri = () => {
     });
   };
 
-  // Handle view member details
   const handleViewMember = (mode: "achievements" | "attendance", member: MemberType) => {
     setSelectedMember(member);
     setViewMode(mode);
   };
 
-  // Go back to list view
   const handleBackToList = () => {
     setViewMode("list");
     setSelectedMember(null);
   };
 
-  // Render appropriate content based on view mode
   const renderContent = () => {
     switch (viewMode) {
       case "achievements":
@@ -287,8 +277,7 @@ const Membri = () => {
             />
           );
         } else {
-          // Instead of implicitly returning void, we immediately return to list view
-          return handleBackToList(), <></>;  // Return empty fragment after function call
+          return handleBackToList(), <></>;
         }
       
       case "attendance":
@@ -301,8 +290,7 @@ const Membri = () => {
             />
           );
         } else {
-          // Instead of implicitly returning void, we immediately return to list view
-          return handleBackToList(), <></>;  // Return empty fragment after function call
+          return handleBackToList(), <></>;
         }
       
       case "list":
@@ -372,75 +360,145 @@ const Membri = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Nome</TableHead>
-                        <TableHead>Unità</TableHead>
-                        <TableHead>Ruolo</TableHead>
-                        <TableHead>Email</TableHead>
-                        <TableHead>Conquiste</TableHead>
-                        <TableHead>Presenze</TableHead>
-                        <TableHead className="text-right">Azioni</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {filteredMembers.length === 0 ? (
-                        <TableRow>
-                          <TableCell colSpan={7} className="text-center py-4">
-                            Nessun membro trovato
-                          </TableCell>
-                        </TableRow>
-                      ) : (
-                        filteredMembers.map((member) => (
-                          <TableRow key={member.id}>
-                            <TableCell className="font-medium">{member.name}</TableCell>
-                            <TableCell>{member.unitName || "-"}</TableCell>
-                            <TableCell className="capitalize">{member.role}</TableCell>
-                            <TableCell>{member.email}</TableCell>
-                            <TableCell>
+                {isMobile ? (
+                  <div className="space-y-4">
+                    {filteredMembers.length === 0 ? (
+                      <div className="text-center py-4">
+                        Nessun membro trovato
+                      </div>
+                    ) : (
+                      filteredMembers.map((member) => (
+                        <Card key={member.id} className="overflow-hidden">
+                          <div className="p-4">
+                            <div className="flex justify-between items-start mb-2">
+                              <div>
+                                <h3 className="font-medium text-base">{member.name}</h3>
+                                <p className="text-sm text-muted-foreground">{member.email}</p>
+                              </div>
+                              <div className="flex">
+                                <Button 
+                                  variant="ghost" 
+                                  size="icon"
+                                  onClick={() => setEditingMember(member)}
+                                >
+                                  <Edit className="h-4 w-4" />
+                                </Button>
+                                <Button 
+                                  variant="ghost" 
+                                  size="icon"
+                                  onClick={() => handleDeleteMember(member.id)}
+                                >
+                                  <Trash2 className="h-4 w-4 text-destructive" />
+                                </Button>
+                              </div>
+                            </div>
+                            
+                            <div className="grid grid-cols-2 gap-2 text-sm">
+                              <div>
+                                <span className="text-muted-foreground">Unità:</span> {member.unitName || "-"}
+                              </div>
+                              <div>
+                                <span className="text-muted-foreground">Ruolo:</span> <span className="capitalize">{member.role}</span>
+                              </div>
+                            </div>
+                            
+                            <div className="flex mt-3 pt-3 border-t justify-between">
                               <Button 
-                                variant="ghost" 
+                                variant="outline" 
                                 size="sm"
+                                className="text-xs h-8"
                                 onClick={() => handleViewMember("achievements", member)}
                               >
-                                <Award className="mr-1 h-4 w-4" />
-                                {member.achievements.length}
+                                <Award className="mr-1 h-3 w-3" />
+                                Conquiste ({member.achievements.length})
                               </Button>
-                            </TableCell>
-                            <TableCell>
+                              
                               <Button 
-                                variant="ghost" 
+                                variant="outline" 
                                 size="sm"
+                                className="text-xs h-8"
                                 onClick={() => handleViewMember("attendance", member)}
                               >
-                                <Calendar className="mr-1 h-4 w-4" />
-                                {member.attendance.length}
+                                <Calendar className="mr-1 h-3 w-3" />
+                                Presenze ({member.attendance.length})
                               </Button>
-                            </TableCell>
-                            <TableCell className="text-right space-x-1">
-                              <Button 
-                                variant="ghost" 
-                                size="icon"
-                                onClick={() => setEditingMember(member)}
-                              >
-                                <Edit className="h-4 w-4" />
-                              </Button>
-                              <Button 
-                                variant="ghost" 
-                                size="icon"
-                                onClick={() => handleDeleteMember(member.id)}
-                              >
-                                <Trash2 className="h-4 w-4 text-destructive" />
-                              </Button>
+                            </div>
+                          </div>
+                        </Card>
+                      ))
+                    )}
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Nome</TableHead>
+                          <TableHead>Unità</TableHead>
+                          <TableHead>Ruolo</TableHead>
+                          <TableHead>Email</TableHead>
+                          <TableHead>Conquiste</TableHead>
+                          <TableHead>Presenze</TableHead>
+                          <TableHead className="text-right">Azioni</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {filteredMembers.length === 0 ? (
+                          <TableRow>
+                            <TableCell colSpan={7} className="text-center py-4">
+                              Nessun membro trovato
                             </TableCell>
                           </TableRow>
-                        ))
-                      )}
-                    </TableBody>
-                  </Table>
-                </div>
+                        ) : (
+                          filteredMembers.map((member) => (
+                            <TableRow key={member.id}>
+                              <TableCell className="font-medium">{member.name}</TableCell>
+                              <TableCell>{member.unitName || "-"}</TableCell>
+                              <TableCell className="capitalize">{member.role}</TableCell>
+                              <TableCell>{member.email}</TableCell>
+                              <TableCell>
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm"
+                                  onClick={() => handleViewMember("achievements", member)}
+                                >
+                                  <Award className="mr-1 h-4 w-4" />
+                                  {member.achievements.length}
+                                </Button>
+                              </TableCell>
+                              <TableCell>
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm"
+                                  onClick={() => handleViewMember("attendance", member)}
+                                >
+                                  <Calendar className="mr-1 h-4 w-4" />
+                                  {member.attendance.length}
+                                </Button>
+                              </TableCell>
+                              <TableCell className="text-right space-x-1">
+                                <Button 
+                                  variant="ghost" 
+                                  size="icon"
+                                  onClick={() => setEditingMember(member)}
+                                >
+                                  <Edit className="h-4 w-4" />
+                                </Button>
+                                <Button 
+                                  variant="ghost" 
+                                  size="icon"
+                                  onClick={() => handleDeleteMember(member.id)}
+                                >
+                                  <Trash2 className="h-4 w-4 text-destructive" />
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          ))
+                        )}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </>
