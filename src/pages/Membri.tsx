@@ -278,22 +278,32 @@ const Membri = () => {
   const renderContent = () => {
     switch (viewMode) {
       case "achievements":
-        return selectedMember ? (
-          <MemberAchievements 
-            member={selectedMember} 
-            onAddAchievement={(achievement) => handleAddAchievement(selectedMember.id, achievement)}
-            onBack={handleBackToList}
-          />
-        ) : handleBackToList();
+        if (selectedMember) {
+          return (
+            <MemberAchievements 
+              member={selectedMember} 
+              onAddAchievement={(achievement) => handleAddAchievement(selectedMember.id, achievement)}
+              onBack={handleBackToList}
+            />
+          );
+        } else {
+          // Instead of implicitly returning void, we immediately return to list view
+          return handleBackToList(), <></>;  // Return empty fragment after function call
+        }
       
       case "attendance":
-        return selectedMember ? (
-          <MemberAttendance 
-            member={selectedMember} 
-            onAddAttendance={(record) => handleAddAttendance(selectedMember.id, record)}
-            onBack={handleBackToList}
-          />
-        ) : handleBackToList();
+        if (selectedMember) {
+          return (
+            <MemberAttendance 
+              member={selectedMember} 
+              onAddAttendance={(record) => handleAddAttendance(selectedMember.id, record)}
+              onBack={handleBackToList}
+            />
+          );
+        } else {
+          // Instead of implicitly returning void, we immediately return to list view
+          return handleBackToList(), <></>;  // Return empty fragment after function call
+        }
       
       case "list":
       default:
