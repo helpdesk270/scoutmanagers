@@ -8,7 +8,6 @@ import {
   Calendar, 
   Users, 
   Settings, 
-  MapPin,
   BookOpen,
   BarChart3
 } from "lucide-react";
@@ -48,12 +47,6 @@ const MobileNavigation: React.FC = () => {
       title: "Membri",
       icon: <Users className="h-5 w-5" />,
       path: "/membri",
-      allowed: ["animatore", "direttore", "admin"]
-    },
-    {
-      title: "Campi",
-      icon: <MapPin className="h-5 w-5" />,
-      path: "/campi",
       allowed: ["animatore", "direttore", "admin"]
     },
     {

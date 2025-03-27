@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -77,16 +78,6 @@ const App = () => (
                 <Sidebar>
                   <div className="container py-8">
                     <h1 className="text-3xl font-bold">Biblioteca</h1>
-                    <p className="text-muted-foreground mt-2">Pagina in costruzione</p>
-                  </div>
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/campi" element={
-              <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
-                <Sidebar>
-                  <div className="container py-8">
-                    <h1 className="text-3xl font-bold">Campi</h1>
                     <p className="text-muted-foreground mt-2">Pagina in costruzione</p>
                   </div>
                 </Sidebar>

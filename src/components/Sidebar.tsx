@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
@@ -14,7 +15,6 @@ import {
   Menu,
   ChevronRight,
   BarChart3,
-  MapPin,
   BookOpen
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -67,12 +67,6 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
       title: "Membri",
       icon: <Users className="h-5 w-5" />,
       path: "/membri",
-      allowed: ["animatore", "direttore", "admin"]
-    },
-    {
-      title: "Campi",
-      icon: <MapPin className="h-5 w-5" />,
-      path: "/campi",
       allowed: ["animatore", "direttore", "admin"]
     },
     {
