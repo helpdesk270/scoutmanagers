@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useAuth } from "@/context/AuthContext";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -200,7 +201,7 @@ const Dashboard = () => {
         <div className="wave-divider"></div>
       </Card>
 
-      {(user.role === "admin" || user.role === "direttore") && (
+      {(user.role === "admin" || user.role === "direttore" || user.role === "animatore") && (
         <Card>
           <CardHeader className="px-4 py-3 sm:px-6 sm:py-4">
             <CardTitle className="text-lg sm:text-xl">Panoramica dell'unità</CardTitle>
