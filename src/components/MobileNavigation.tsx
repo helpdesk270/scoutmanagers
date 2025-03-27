@@ -54,12 +54,6 @@ const MobileNavigation: React.FC = () => {
       icon: <BarChart3 className="h-5 w-5" />,
       path: "/rapporti",
       allowed: ["direttore", "admin"]
-    },
-    {
-      title: "Impostazioni",
-      icon: <Settings className="h-5 w-5" />,
-      path: "/impostazioni",
-      allowed: ["integrante", "animatore", "direttore", "admin"]
     }
   ];
 

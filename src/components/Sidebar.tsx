@@ -96,6 +96,9 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
       .toUpperCase();
   };
 
+  // Find the settings navigation item
+  const settingsItem = navigationItems.find(item => item.title === "Impostazioni");
+
   return (
     <div className="flex min-h-screen w-full">
       <aside
@@ -138,7 +141,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         <Separator />
         <div className="flex-1 overflow-auto py-4">
           <nav className="space-y-1 px-2">
-            {filteredNavigation.map((item) => (
+            {filteredNavigation.filter(item => item.title !== "Impostazioni").map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
@@ -185,7 +188,19 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         )}
       >
         {user && (
-          <div className="fixed top-4 right-4 z-30">
+          <div className="fixed top-4 right-4 z-30 flex items-center gap-2">
+            {settingsItem && (
+              <Button
+                variant="outline"
+                size="sm"
+                as={Link}
+                to={settingsItem.path}
+                className="flex items-center gap-1 bg-white shadow-sm"
+              >
+                <Settings className="h-4 w-4" />
+                <span className="hidden sm:inline">Impostazioni</span>
+              </Button>
+            )}
             <Button
               variant="outline"
               size="sm"
