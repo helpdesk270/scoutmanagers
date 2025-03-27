@@ -11,7 +11,6 @@ import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-// Interface for specialization data
 interface Specialization {
   id: string;
   name: string;
@@ -21,7 +20,6 @@ interface Specialization {
   color: string;
 }
 
-// Interface for achievement data
 interface Achievement {
   id: string;
   title: string;
@@ -31,7 +29,6 @@ interface Achievement {
   difficulty: "Facile" | "Medio" | "Difficile";
 }
 
-// Interface for upcoming activity
 interface Activity {
   id: string;
   title: string;
@@ -40,7 +37,6 @@ interface Activity {
   location: string;
 }
 
-// Mock data for specializations
 const specializations: Specialization[] = [
   {
     id: "1",
@@ -76,7 +72,6 @@ const specializations: Specialization[] = [
   }
 ];
 
-// Mock data for achievements
 const achievements: Achievement[] = [
   {
     id: "1",
@@ -104,7 +99,6 @@ const achievements: Achievement[] = [
   }
 ];
 
-// Mock data for upcoming activities
 const activities: Activity[] = [
   {
     id: "1",
@@ -129,7 +123,6 @@ const activities: Activity[] = [
   }
 ];
 
-// Dashboard component with role-specific content
 const Dashboard = () => {
   const { user } = useAuth();
   const isMobile = useIsMobile();
@@ -138,7 +131,6 @@ const Dashboard = () => {
     return <div>Caricamento...</div>;
   }
 
-  // Get user initials for avatar fallback
   const getInitials = (name: string) => {
     return name
       .split(" ")
@@ -149,9 +141,7 @@ const Dashboard = () => {
 
   return (
     <div className="container animate-fade-in space-y-4 py-4 sm:space-y-6 sm:py-8">
-      {/* Welcome header */}
       <header className="space-y-4">
-        {/* User info section - Moved to top */}
         <div className="flex items-center space-x-3">
           <Avatar className="h-12 w-12 border border-border">
             <AvatarImage src={user.avatarUrl} alt={user.name} />
@@ -166,8 +156,6 @@ const Dashboard = () => {
             </p>
           </div>
         </div>
-        
-        {/* Date Badge - Moved below user info */}
         <div className="flex justify-between items-center">
           <div>
             <p className="text-sm text-muted-foreground">
@@ -184,7 +172,6 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {/* Congratulation card */}
       <Card className="overflow-hidden border-0 bg-gradient-to-br from-scout-cream to-white shadow-md">
         <CardContent className="grid grid-cols-1 gap-4 p-4 sm:p-6 sm:gap-8 lg:grid-cols-3">
           <div className="col-span-2 flex flex-col justify-center space-y-2">
@@ -213,8 +200,58 @@ const Dashboard = () => {
         <div className="wave-divider"></div>
       </Card>
 
+      {(user.role === "admin" || user.role === "direttore") && (
+        <Card>
+          <CardHeader className="px-4 py-3 sm:px-6 sm:py-4">
+            <CardTitle className="text-lg sm:text-xl">Panoramica dell'unità</CardTitle>
+            <CardDescription className="text-xs sm:text-sm">
+              Informazioni generali sull'unità {user.unitName}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="px-4 pb-4 sm:px-6">
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-4 sm:gap-4">
+              <div className="rounded-lg bg-primary/10 p-3 sm:p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[10px] sm:text-sm text-muted-foreground">Totale membri</p>
+                    <p className="text-lg sm:text-2xl font-bold">24</p>
+                  </div>
+                  <Users className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
+                </div>
+              </div>
+              <div className="rounded-lg bg-scout-green/10 p-3 sm:p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[10px] sm:text-sm text-muted-foreground">Eventi attivi</p>
+                    <p className="text-lg sm:text-2xl font-bold">7</p>
+                  </div>
+                  <Calendar className="h-6 w-6 sm:h-8 sm:w-8 text-scout-green" />
+                </div>
+              </div>
+              <div className="rounded-lg bg-scout-orange/10 p-3 sm:p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[10px] sm:text-sm text-muted-foreground">Specializzazioni</p>
+                    <p className="text-lg sm:text-2xl font-bold">15</p>
+                  </div>
+                  <Award className="h-6 w-6 sm:h-8 sm:w-8 text-scout-orange" />
+                </div>
+              </div>
+              <div className="rounded-lg bg-scout-blue/10 p-3 sm:p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[10px] sm:text-sm text-muted-foreground">Materiali</p>
+                    <p className="text-lg sm:text-2xl font-bold">32</p>
+                  </div>
+                  <BookOpen className="h-6 w-6 sm:h-8 sm:w-8 text-scout-blue" />
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {/* Specializations card */}
         <Card className="col-span-1 lg:col-span-2">
           <CardHeader className="px-4 py-3 sm:px-6 sm:py-4">
             <CardTitle className="text-lg sm:text-xl">Le tue specializzazioni</CardTitle>
@@ -249,7 +286,6 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
-        {/* Activities card */}
         <Card>
           <CardHeader className="px-4 py-3 sm:px-6 sm:py-4">
             <CardTitle className="text-lg sm:text-xl">Prossime attività</CardTitle>
@@ -290,7 +326,6 @@ const Dashboard = () => {
         </Card>
       </div>
 
-      {/* Achievements */}
       <Tabs defaultValue="achievements" className="space-y-3 sm:space-y-4">
         <div className="flex items-center justify-between">
           <TabsList>
@@ -382,58 +417,6 @@ const Dashboard = () => {
           </Card>
         </TabsContent>
       </Tabs>
-
-      {/* Admin/Director specific content */}
-      {(user.role === "admin" || user.role === "direttore") && (
-        <Card>
-          <CardHeader className="px-4 py-3 sm:px-6 sm:py-4">
-            <CardTitle className="text-lg sm:text-xl">Panoramica dell'unità</CardTitle>
-            <CardDescription className="text-xs sm:text-sm">
-              Informazioni generali sull'unità {user.unitName}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="px-4 pb-4 sm:px-6">
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-4 sm:gap-4">
-              <div className="rounded-lg bg-primary/10 p-3 sm:p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-[10px] sm:text-sm text-muted-foreground">Totale membri</p>
-                    <p className="text-lg sm:text-2xl font-bold">24</p>
-                  </div>
-                  <Users className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
-                </div>
-              </div>
-              <div className="rounded-lg bg-scout-green/10 p-3 sm:p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-[10px] sm:text-sm text-muted-foreground">Eventi attivi</p>
-                    <p className="text-lg sm:text-2xl font-bold">7</p>
-                  </div>
-                  <Calendar className="h-6 w-6 sm:h-8 sm:w-8 text-scout-green" />
-                </div>
-              </div>
-              <div className="rounded-lg bg-scout-orange/10 p-3 sm:p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-[10px] sm:text-sm text-muted-foreground">Specializzazioni</p>
-                    <p className="text-lg sm:text-2xl font-bold">15</p>
-                  </div>
-                  <Award className="h-6 w-6 sm:h-8 sm:w-8 text-scout-orange" />
-                </div>
-              </div>
-              <div className="rounded-lg bg-scout-blue/10 p-3 sm:p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-[10px] sm:text-sm text-muted-foreground">Materiali</p>
-                    <p className="text-lg sm:text-2xl font-bold">32</p>
-                  </div>
-                  <BookOpen className="h-6 w-6 sm:h-8 sm:w-8 text-scout-blue" />
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
     </div>
   );
 };

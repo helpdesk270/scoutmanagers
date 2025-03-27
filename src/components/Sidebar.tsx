@@ -193,8 +193,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
               <Button
                 variant="outline"
                 size="sm"
-                as={Link}
-                to={settingsItem.path}
+                onClick={() => window.location.href = settingsItem.path}
                 className="flex items-center gap-1 bg-white shadow-sm"
               >
                 <Settings className="h-4 w-4" />
