@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
@@ -167,29 +166,19 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         <div className="p-4">
           {user && (
             <div className={cn(
-              "flex items-center justify-between", 
+              "flex items-center", 
               collapsed ? "flex-col space-y-4" : "space-x-2"
             )}>
-              <div className={cn("flex items-center", collapsed ? "flex-col" : "space-x-2")}>
-                <Avatar>
-                  <AvatarImage src={user.avatarUrl} />
-                  <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
-                </Avatar>
-                {!collapsed && (
-                  <div className="space-y-0.5">
-                    <p className="text-sm font-medium">{user.name}</p>
-                    <p className="text-xs text-muted-foreground capitalize">{user.role}</p>
-                  </div>
-                )}
-              </div>
-              <Button
-                variant="ghost"
-                size={collapsed ? "icon" : "sm"}
-                onClick={logout}
-                className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-              >
-                {collapsed ? <LogOut className="h-4 w-4" /> : "Esci"}
-              </Button>
+              <Avatar>
+                <AvatarImage src={user.avatarUrl} />
+                <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
+              </Avatar>
+              {!collapsed && (
+                <div className="space-y-0.5">
+                  <p className="text-sm font-medium">{user.name}</p>
+                  <p className="text-xs text-muted-foreground capitalize">{user.role}</p>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -201,9 +190,22 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
           "pl-0" // No padding on mobile
         )}
       >
+        {user && (
+          <div className="fixed top-4 right-4 z-30">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={logout}
+              className="flex items-center gap-1 bg-white shadow-sm"
+            >
+              <LogOut className="h-4 w-4" />
+              <span className="hidden sm:inline">Esci</span>
+            </Button>
+          </div>
+        )}
+        
         <main className="flex-1 pb-16 md:pb-0">{children}</main>
         
-        {/* Mobile bottom navigation */}
         {isMobile && <MobileNavigation />}
       </div>
     </div>
