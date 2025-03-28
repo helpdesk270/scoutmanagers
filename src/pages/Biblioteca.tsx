@@ -3,6 +3,7 @@ import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Music, FileText, Image } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
@@ -10,7 +11,7 @@ const Biblioteca = () => {
   const { user } = useAuth();
 
   return (
-    <div className="container py-8">
+    <div className="container py-8 max-w-full overflow-x-hidden">
       <h1 className="text-3xl font-bold mb-6">Biblioteca</h1>
       <p className="text-muted-foreground mb-8">
         Accedi alla raccolta di musiche, manuali e foto del Club Comando Celeste
@@ -20,15 +21,15 @@ const Biblioteca = () => {
         <TabsList className="grid w-full grid-cols-3 mb-6">
           <TabsTrigger value="musica" className="flex items-center gap-2">
             <Music className="h-4 w-4" />
-            <span>Musica</span>
+            <span className="truncate">Musica</span>
           </TabsTrigger>
           <TabsTrigger value="manuali" className="flex items-center gap-2">
             <FileText className="h-4 w-4" />
-            <span>Manuali</span>
+            <span className="truncate">Manuali</span>
           </TabsTrigger>
           <TabsTrigger value="foto" className="flex items-center gap-2">
             <Image className="h-4 w-4" />
-            <span>Foto</span>
+            <span className="truncate">Foto</span>
           </TabsTrigger>
         </TabsList>
 
@@ -42,58 +43,62 @@ const Biblioteca = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Titolo</TableHead>
-                    <TableHead>Categoria</TableHead>
-                    <TableHead>Durata</TableHead>
-                    <TableHead className="text-right">Azione</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
-                    <TableCell className="font-medium">Inno del Club</TableCell>
-                    <TableCell>Cerimoniale</TableCell>
-                    <TableCell>2:45</TableCell>
-                    <TableCell className="text-right">
-                      <a href="#" className="text-primary hover:underline">
-                        Ascolta
-                      </a>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Marcia Scout</TableCell>
-                    <TableCell>Attività</TableCell>
-                    <TableCell>3:10</TableCell>
-                    <TableCell className="text-right">
-                      <a href="#" className="text-primary hover:underline">
-                        Ascolta
-                      </a>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Canzone del Fuoco</TableCell>
-                    <TableCell>Serata</TableCell>
-                    <TableCell>4:05</TableCell>
-                    <TableCell className="text-right">
-                      <a href="#" className="text-primary hover:underline">
-                        Ascolta
-                      </a>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Alba Scout</TableCell>
-                    <TableCell>Mattutino</TableCell>
-                    <TableCell>2:30</TableCell>
-                    <TableCell className="text-right">
-                      <a href="#" className="text-primary hover:underline">
-                        Ascolta
-                      </a>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
+              <ScrollArea className="w-full">
+                <div className="w-full overflow-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Titolo</TableHead>
+                        <TableHead>Categoria</TableHead>
+                        <TableHead>Durata</TableHead>
+                        <TableHead className="text-right">Azione</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell className="font-medium">Inno del Club</TableCell>
+                        <TableCell>Cerimoniale</TableCell>
+                        <TableCell>2:45</TableCell>
+                        <TableCell className="text-right">
+                          <a href="#" className="text-primary hover:underline">
+                            Ascolta
+                          </a>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">Marcia Scout</TableCell>
+                        <TableCell>Attività</TableCell>
+                        <TableCell>3:10</TableCell>
+                        <TableCell className="text-right">
+                          <a href="#" className="text-primary hover:underline">
+                            Ascolta
+                          </a>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">Canzone del Fuoco</TableCell>
+                        <TableCell>Serata</TableCell>
+                        <TableCell>4:05</TableCell>
+                        <TableCell className="text-right">
+                          <a href="#" className="text-primary hover:underline">
+                            Ascolta
+                          </a>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">Alba Scout</TableCell>
+                        <TableCell>Mattutino</TableCell>
+                        <TableCell>2:30</TableCell>
+                        <TableCell className="text-right">
+                          <a href="#" className="text-primary hover:underline">
+                            Ascolta
+                          </a>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </div>
+              </ScrollArea>
             </CardContent>
           </Card>
         </TabsContent>
@@ -108,58 +113,62 @@ const Biblioteca = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Titolo</TableHead>
-                    <TableHead>Categoria</TableHead>
-                    <TableHead>Data</TableHead>
-                    <TableHead className="text-right">Azione</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
-                    <TableCell className="font-medium">Manuale Base</TableCell>
-                    <TableCell>Formazione</TableCell>
-                    <TableCell>10/01/2023</TableCell>
-                    <TableCell className="text-right">
-                      <a href="#" className="text-primary hover:underline">
-                        Scarica PDF
-                      </a>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Guida alle Specializzazioni</TableCell>
-                    <TableCell>Specializzazioni</TableCell>
-                    <TableCell>15/03/2023</TableCell>
-                    <TableCell className="text-right">
-                      <a href="#" className="text-primary hover:underline">
-                        Scarica PDF
-                      </a>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Protocollo di Sicurezza</TableCell>
-                    <TableCell>Sicurezza</TableCell>
-                    <TableCell>22/05/2023</TableCell>
-                    <TableCell className="text-right">
-                      <a href="#" className="text-primary hover:underline">
-                        Scarica PDF
-                      </a>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Guida alle Attività Outdoor</TableCell>
-                    <TableCell>Attività</TableCell>
-                    <TableCell>07/06/2023</TableCell>
-                    <TableCell className="text-right">
-                      <a href="#" className="text-primary hover:underline">
-                        Scarica PDF
-                      </a>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
+              <ScrollArea className="w-full">
+                <div className="w-full overflow-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Titolo</TableHead>
+                        <TableHead>Categoria</TableHead>
+                        <TableHead>Data</TableHead>
+                        <TableHead className="text-right">Azione</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell className="font-medium">Manuale Base</TableCell>
+                        <TableCell>Formazione</TableCell>
+                        <TableCell>10/01/2023</TableCell>
+                        <TableCell className="text-right">
+                          <a href="#" className="text-primary hover:underline">
+                            Scarica PDF
+                          </a>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">Guida alle Specializzazioni</TableCell>
+                        <TableCell>Specializzazioni</TableCell>
+                        <TableCell>15/03/2023</TableCell>
+                        <TableCell className="text-right">
+                          <a href="#" className="text-primary hover:underline">
+                            Scarica PDF
+                          </a>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">Protocollo di Sicurezza</TableCell>
+                        <TableCell>Sicurezza</TableCell>
+                        <TableCell>22/05/2023</TableCell>
+                        <TableCell className="text-right">
+                          <a href="#" className="text-primary hover:underline">
+                            Scarica PDF
+                          </a>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">Guida alle Attività Outdoor</TableCell>
+                        <TableCell>Attività</TableCell>
+                        <TableCell>07/06/2023</TableCell>
+                        <TableCell className="text-right">
+                          <a href="#" className="text-primary hover:underline">
+                            Scarica PDF
+                          </a>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </div>
+              </ScrollArea>
             </CardContent>
           </Card>
         </TabsContent>
