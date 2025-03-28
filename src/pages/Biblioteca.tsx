@@ -1,11 +1,11 @@
-
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Music, FileText, Image } from "lucide-react";
+import { Music, FileText, Image, Download, Play } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 const Biblioteca = () => {
   const { user } = useAuth();
@@ -33,7 +33,7 @@ const Biblioteca = () => {
           </TabsTrigger>
         </TabsList>
 
-        {/* Musica Section */}
+        {/* Musica Section - Card Layout */}
         <TabsContent value="musica">
           <Card>
             <CardHeader>
@@ -43,67 +43,88 @@ const Biblioteca = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <ScrollArea className="w-full">
-                <div className="w-full overflow-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Titolo</TableHead>
-                        <TableHead>Categoria</TableHead>
-                        <TableHead>Durata</TableHead>
-                        <TableHead className="text-right">Azione</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell className="font-medium">Inno del Club</TableCell>
-                        <TableCell>Cerimoniale</TableCell>
-                        <TableCell>2:45</TableCell>
-                        <TableCell className="text-right">
-                          <a href="#" className="text-primary hover:underline">
-                            Ascolta
-                          </a>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-medium">Marcia Scout</TableCell>
-                        <TableCell>Attività</TableCell>
-                        <TableCell>3:10</TableCell>
-                        <TableCell className="text-right">
-                          <a href="#" className="text-primary hover:underline">
-                            Ascolta
-                          </a>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-medium">Canzone del Fuoco</TableCell>
-                        <TableCell>Serata</TableCell>
-                        <TableCell>4:05</TableCell>
-                        <TableCell className="text-right">
-                          <a href="#" className="text-primary hover:underline">
-                            Ascolta
-                          </a>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-medium">Alba Scout</TableCell>
-                        <TableCell>Mattutino</TableCell>
-                        <TableCell>2:30</TableCell>
-                        <TableCell className="text-right">
-                          <a href="#" className="text-primary hover:underline">
-                            Ascolta
-                          </a>
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </div>
-              </ScrollArea>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {/* Music Card 1 */}
+                <Card>
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-base">Inno del Club</CardTitle>
+                        <CardDescription>Cerimoniale • 2:45</CardDescription>
+                      </div>
+                      <Badge>Ufficiale</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <Button variant="outline" size="sm" className="w-full flex items-center gap-2">
+                      <Play className="h-4 w-4" />
+                      <span>Ascolta</span>
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Music Card 2 */}
+                <Card>
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-base">Marcia Scout</CardTitle>
+                        <CardDescription>Attività • 3:10</CardDescription>
+                      </div>
+                      <Badge>Popolare</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <Button variant="outline" size="sm" className="w-full flex items-center gap-2">
+                      <Play className="h-4 w-4" />
+                      <span>Ascolta</span>
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Music Card 3 */}
+                <Card>
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-base">Canzone del Fuoco</CardTitle>
+                        <CardDescription>Serata • 4:05</CardDescription>
+                      </div>
+                      <Badge>Tradizionale</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <Button variant="outline" size="sm" className="w-full flex items-center gap-2">
+                      <Play className="h-4 w-4" />
+                      <span>Ascolta</span>
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Music Card 4 */}
+                <Card>
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-base">Alba Scout</CardTitle>
+                        <CardDescription>Mattutino • 2:30</CardDescription>
+                      </div>
+                      <Badge>Tradizionale</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <Button variant="outline" size="sm" className="w-full flex items-center gap-2">
+                      <Play className="h-4 w-4" />
+                      <span>Ascolta</span>
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
 
-        {/* Manuali Section */}
+        {/* Manuali Section - Card Layout */}
         <TabsContent value="manuali">
           <Card>
             <CardHeader>
@@ -113,67 +134,88 @@ const Biblioteca = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <ScrollArea className="w-full">
-                <div className="w-full overflow-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Titolo</TableHead>
-                        <TableHead>Categoria</TableHead>
-                        <TableHead>Data</TableHead>
-                        <TableHead className="text-right">Azione</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell className="font-medium">Manuale Base</TableCell>
-                        <TableCell>Formazione</TableCell>
-                        <TableCell>10/01/2023</TableCell>
-                        <TableCell className="text-right">
-                          <a href="#" className="text-primary hover:underline">
-                            Scarica PDF
-                          </a>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-medium">Guida alle Specializzazioni</TableCell>
-                        <TableCell>Specializzazioni</TableCell>
-                        <TableCell>15/03/2023</TableCell>
-                        <TableCell className="text-right">
-                          <a href="#" className="text-primary hover:underline">
-                            Scarica PDF
-                          </a>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-medium">Protocollo di Sicurezza</TableCell>
-                        <TableCell>Sicurezza</TableCell>
-                        <TableCell>22/05/2023</TableCell>
-                        <TableCell className="text-right">
-                          <a href="#" className="text-primary hover:underline">
-                            Scarica PDF
-                          </a>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-medium">Guida alle Attività Outdoor</TableCell>
-                        <TableCell>Attività</TableCell>
-                        <TableCell>07/06/2023</TableCell>
-                        <TableCell className="text-right">
-                          <a href="#" className="text-primary hover:underline">
-                            Scarica PDF
-                          </a>
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </div>
-              </ScrollArea>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {/* Manual Card 1 */}
+                <Card>
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-base">Manuale Base</CardTitle>
+                        <CardDescription>Formazione • 10/01/2023</CardDescription>
+                      </div>
+                      <Badge variant="outline">PDF</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <Button variant="outline" size="sm" className="w-full flex items-center gap-2">
+                      <Download className="h-4 w-4" />
+                      <span>Scarica</span>
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Manual Card 2 */}
+                <Card>
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-base">Guida alle Specializzazioni</CardTitle>
+                        <CardDescription>Specializzazioni • 15/03/2023</CardDescription>
+                      </div>
+                      <Badge variant="outline">PDF</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <Button variant="outline" size="sm" className="w-full flex items-center gap-2">
+                      <Download className="h-4 w-4" />
+                      <span>Scarica</span>
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Manual Card 3 */}
+                <Card>
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-base">Protocollo di Sicurezza</CardTitle>
+                        <CardDescription>Sicurezza • 22/05/2023</CardDescription>
+                      </div>
+                      <Badge variant="outline">PDF</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <Button variant="outline" size="sm" className="w-full flex items-center gap-2">
+                      <Download className="h-4 w-4" />
+                      <span>Scarica</span>
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Manual Card 4 */}
+                <Card>
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-base">Guida alle Attività Outdoor</CardTitle>
+                        <CardDescription>Attività • 07/06/2023</CardDescription>
+                      </div>
+                      <Badge variant="outline">PDF</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <Button variant="outline" size="sm" className="w-full flex items-center gap-2">
+                      <Download className="h-4 w-4" />
+                      <span>Scarica</span>
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
 
-        {/* Foto Section */}
+        {/* Foto Section - Keep the existing grid layout */}
         <TabsContent value="foto">
           <Card>
             <CardHeader>
