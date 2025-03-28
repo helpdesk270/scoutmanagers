@@ -201,7 +201,59 @@ const Dashboard = () => {
         <div className="wave-divider"></div>
       </Card>
 
-      {(user.role === "admin" || user.role === "direttore" || user.role === "animatore") && (
+      {/* Panoramica section based on user role */}
+      {(user.role === "admin" || user.role === "direttore") && (
+        <Card>
+          <CardHeader className="px-4 py-3 sm:px-6 sm:py-4">
+            <CardTitle className="text-lg sm:text-xl">Panoramica del Club</CardTitle>
+            <CardDescription className="text-xs sm:text-sm">
+              Informazioni generali di tutte le unità del Club Comando Celeste
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="px-4 pb-4 sm:px-6">
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-4 sm:gap-4">
+              <div className="rounded-lg bg-primary/10 p-3 sm:p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[10px] sm:text-sm text-muted-foreground">Totale membri</p>
+                    <p className="text-lg sm:text-2xl font-bold">87</p>
+                  </div>
+                  <Users className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
+                </div>
+              </div>
+              <div className="rounded-lg bg-scout-green/10 p-3 sm:p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[10px] sm:text-sm text-muted-foreground">Eventi attivi</p>
+                    <p className="text-lg sm:text-2xl font-bold">15</p>
+                  </div>
+                  <Calendar className="h-6 w-6 sm:h-8 sm:w-8 text-scout-green" />
+                </div>
+              </div>
+              <div className="rounded-lg bg-scout-orange/10 p-3 sm:p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[10px] sm:text-sm text-muted-foreground">Unità totali</p>
+                    <p className="text-lg sm:text-2xl font-bold">4</p>
+                  </div>
+                  <Award className="h-6 w-6 sm:h-8 sm:w-8 text-scout-orange" />
+                </div>
+              </div>
+              <div className="rounded-lg bg-scout-blue/10 p-3 sm:p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[10px] sm:text-sm text-muted-foreground">Materiali</p>
+                    <p className="text-lg sm:text-2xl font-bold">125</p>
+                  </div>
+                  <BookOpen className="h-6 w-6 sm:h-8 sm:w-8 text-scout-blue" />
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {user.role === "animatore" && (
         <Card>
           <CardHeader className="px-4 py-3 sm:px-6 sm:py-4">
             <CardTitle className="text-lg sm:text-xl">Panoramica dell'unità</CardTitle>
