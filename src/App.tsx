@@ -15,6 +15,7 @@ import Dashboard from "./pages/Dashboard";
 import Specializzazioni from "./pages/Specializzazioni";
 import Membri from "./pages/Membri";
 import Biblioteca from "./pages/Biblioteca";
+import Attivita from "./pages/Attivita";
 import AccessoDenied from "./pages/AccessoDenied";
 import NotFound from "./pages/NotFound";
 
@@ -63,7 +64,7 @@ const App = () => (
               </ProtectedRoute>
             } />
             
-            {/* Biblioteca route using our new component */}
+            {/* Biblioteca route */}
             <Route path="/biblioteca" element={
               <ProtectedRoute>
                 <Sidebar>
@@ -72,17 +73,16 @@ const App = () => (
               </ProtectedRoute>
             } />
             
-            {/* Placeholder routes for future implementation */}
+            {/* Attività route using our new component */}
             <Route path="/attivita" element={
               <ProtectedRoute>
                 <Sidebar>
-                  <div className="container py-8">
-                    <h1 className="text-3xl font-bold">Attività</h1>
-                    <p className="text-muted-foreground mt-2">Pagina in costruzione</p>
-                  </div>
+                  <Attivita />
                 </Sidebar>
               </ProtectedRoute>
             } />
+            
+            {/* Placeholder routes for future implementation */}
             <Route path="/rapporti" element={
               <ProtectedRoute allowedRoles={["direttore", "admin"]}>
                 <Sidebar>
