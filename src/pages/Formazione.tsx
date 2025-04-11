@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   Tabs,
@@ -15,7 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Award, BookOpen, FileText, Users, GraduationCap, BarChart4, Filter } from "lucide-react";
+import { Award, BookOpen, FileText, Users, GraduationCap, BarChart4, Filter, Search as SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/context/AuthContext";
@@ -413,7 +412,7 @@ const Formazione: React.FC = () => {
                     placeholder="Cerca membro..." 
                     className="pl-8"
                   />
-                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 </div>
                 <ScrollArea className="h-[300px]">
                   <div className="space-y-1">
@@ -482,7 +481,7 @@ const Formazione: React.FC = () => {
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                       />
-                      <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                      <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                     </div>
                   </div>
                   
