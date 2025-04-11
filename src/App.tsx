@@ -12,10 +12,14 @@ import Sidebar from "@/components/Sidebar";
 import Login from "./pages/Login";
 import Registrazione from "./pages/Registrazione";
 import Dashboard from "./pages/Dashboard";
-import Specializzazioni from "./pages/Specializzazioni";
 import Membri from "./pages/Membri";
-import Biblioteca from "./pages/Biblioteca";
 import Attivita from "./pages/Attivita";
+import Formazione from "./pages/Formazione";
+import Comunicazione from "./pages/Comunicazione";
+import Finanziario from "./pages/Finanziario";
+import Risorse from "./pages/Risorse";
+import Rapporti from "./pages/Rapporti";
+import Configurazioni from "./pages/Configurazioni";
 import AccessoDenied from "./pages/AccessoDenied";
 import NotFound from "./pages/NotFound";
 
@@ -49,13 +53,6 @@ const App = () => (
                 </Sidebar>
               </ProtectedRoute>
             } />
-            <Route path="/specializzazioni" element={
-              <ProtectedRoute>
-                <Sidebar>
-                  <Specializzazioni />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
             <Route path="/membri" element={
               <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
                 <Sidebar>
@@ -63,17 +60,6 @@ const App = () => (
                 </Sidebar>
               </ProtectedRoute>
             } />
-            
-            {/* Biblioteca route */}
-            <Route path="/biblioteca" element={
-              <ProtectedRoute>
-                <Sidebar>
-                  <Biblioteca />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            
-            {/* Attività route using our new component */}
             <Route path="/attivita" element={
               <ProtectedRoute>
                 <Sidebar>
@@ -81,25 +67,45 @@ const App = () => (
                 </Sidebar>
               </ProtectedRoute>
             } />
-            
-            {/* Placeholder routes for future implementation */}
-            <Route path="/rapporti" element={
-              <ProtectedRoute allowedRoles={["direttore", "admin"]}>
+            <Route path="/formazione" element={
+              <ProtectedRoute>
                 <Sidebar>
-                  <div className="container py-8">
-                    <h1 className="text-3xl font-bold">Rapporti</h1>
-                    <p className="text-muted-foreground mt-2">Pagina in costruzione</p>
-                  </div>
+                  <Formazione />
                 </Sidebar>
               </ProtectedRoute>
             } />
-            <Route path="/impostazioni" element={
+            <Route path="/comunicazione" element={
               <ProtectedRoute>
                 <Sidebar>
-                  <div className="container py-8">
-                    <h1 className="text-3xl font-bold">Impostazioni</h1>
-                    <p className="text-muted-foreground mt-2">Pagina in costruzione</p>
-                  </div>
+                  <Comunicazione />
+                </Sidebar>
+              </ProtectedRoute>
+            } />
+            <Route path="/finanziario" element={
+              <ProtectedRoute allowedRoles={["direttore", "admin"]}>
+                <Sidebar>
+                  <Finanziario />
+                </Sidebar>
+              </ProtectedRoute>
+            } />
+            <Route path="/risorse" element={
+              <ProtectedRoute>
+                <Sidebar>
+                  <Risorse />
+                </Sidebar>
+              </ProtectedRoute>
+            } />
+            <Route path="/rapporti" element={
+              <ProtectedRoute allowedRoles={["direttore", "admin"]}>
+                <Sidebar>
+                  <Rapporti />
+                </Sidebar>
+              </ProtectedRoute>
+            } />
+            <Route path="/configurazioni" element={
+              <ProtectedRoute allowedRoles={["direttore", "admin"]}>
+                <Sidebar>
+                  <Configurazioni />
                 </Sidebar>
               </ProtectedRoute>
             } />

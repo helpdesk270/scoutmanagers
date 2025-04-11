@@ -4,12 +4,10 @@ import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { 
   Home, 
-  Award, 
-  Calendar, 
   Users, 
-  Settings, 
-  BookOpen,
-  BarChart3
+  Calendar, 
+  Award, 
+  MessageSquare
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
@@ -26,10 +24,10 @@ const MobileNavigation: React.FC = () => {
       allowed: ["integrante", "animatore", "direttore", "admin"]
     },
     {
-      title: "Specializzazioni",
-      icon: <Award className="h-5 w-5" />,
-      path: "/specializzazioni",
-      allowed: ["integrante", "animatore", "direttore", "admin"]
+      title: "Membri",
+      icon: <Users className="h-5 w-5" />,
+      path: "/membri",
+      allowed: ["animatore", "direttore", "admin"]
     },
     {
       title: "Attività",
@@ -38,22 +36,16 @@ const MobileNavigation: React.FC = () => {
       allowed: ["integrante", "animatore", "direttore", "admin"]
     },
     {
-      title: "Biblioteca",
-      icon: <BookOpen className="h-5 w-5" />,
-      path: "/biblioteca",
+      title: "Formazione",
+      icon: <Award className="h-5 w-5" />,
+      path: "/formazione",
       allowed: ["integrante", "animatore", "direttore", "admin"]
     },
     {
-      title: "Membri",
-      icon: <Users className="h-5 w-5" />,
-      path: "/membri",
-      allowed: ["animatore", "direttore", "admin"]
-    },
-    {
-      title: "Rapporti",
-      icon: <BarChart3 className="h-5 w-5" />,
-      path: "/rapporti",
-      allowed: ["direttore", "admin"]
+      title: "Comunicazione",
+      icon: <MessageSquare className="h-5 w-5" />,
+      path: "/comunicazione",
+      allowed: ["integrante", "animatore", "direttore", "admin"]
     }
   ];
 

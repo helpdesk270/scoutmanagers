@@ -7,14 +7,16 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import {
   Home,
-  Award,
   Users,
   Calendar,
+  Award,
+  MessageSquare,
+  DollarSign,
+  Package,
+  BarChart3,
   Settings,
   LogOut,
   Menu,
-  ChevronRight,
-  BarChart3,
   BookOpen
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -46,10 +48,10 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
       allowed: ["integrante", "animatore", "direttore", "admin"]
     },
     {
-      title: "Specializzazioni",
-      icon: <Award className="h-5 w-5" />,
-      path: "/specializzazioni",
-      allowed: ["integrante", "animatore", "direttore", "admin"]
+      title: "Membri",
+      icon: <Users className="h-5 w-5" />,
+      path: "/membri",
+      allowed: ["animatore", "direttore", "admin"]
     },
     {
       title: "Attività",
@@ -58,15 +60,27 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
       allowed: ["integrante", "animatore", "direttore", "admin"]
     },
     {
-      title: "Biblioteca",
-      icon: <BookOpen className="h-5 w-5" />,
-      path: "/biblioteca",
+      title: "Formazione",
+      icon: <Award className="h-5 w-5" />,
+      path: "/formazione",
       allowed: ["integrante", "animatore", "direttore", "admin"]
     },
     {
-      title: "Membri",
-      icon: <Users className="h-5 w-5" />,
-      path: "/membri",
+      title: "Comunicazione",
+      icon: <MessageSquare className="h-5 w-5" />,
+      path: "/comunicazione",
+      allowed: ["integrante", "animatore", "direttore", "admin"]
+    },
+    {
+      title: "Finanziario",
+      icon: <DollarSign className="h-5 w-5" />,
+      path: "/finanziario",
+      allowed: ["direttore", "admin"]
+    },
+    {
+      title: "Risorse",
+      icon: <Package className="h-5 w-5" />,
+      path: "/risorse",
       allowed: ["animatore", "direttore", "admin"]
     },
     {
@@ -76,10 +90,10 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
       allowed: ["direttore", "admin"]
     },
     {
-      title: "Impostazioni",
+      title: "Configurazioni",
       icon: <Settings className="h-5 w-5" />,
-      path: "/impostazioni",
-      allowed: ["integrante", "animatore", "direttore", "admin"]
+      path: "/configurazioni",
+      allowed: ["direttore", "admin"]
     }
   ];
 
@@ -95,9 +109,6 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
       .join("")
       .toUpperCase();
   };
-
-  // Find the settings navigation item
-  const settingsItem = navigationItems.find(item => item.title === "Impostazioni");
 
   return (
     <div className="flex min-h-screen w-full">
@@ -141,7 +152,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         <Separator />
         <div className="flex-1 overflow-auto py-4">
           <nav className="space-y-1 px-2">
-            {filteredNavigation.filter(item => item.title !== "Impostazioni").map((item) => (
+            {filteredNavigation.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
@@ -189,17 +200,6 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
       >
         {user && (
           <div className="fixed top-4 right-4 z-30 flex items-center gap-2">
-            {settingsItem && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => window.location.href = settingsItem.path}
-                className="flex items-center gap-1 bg-white shadow-sm"
-              >
-                <Settings className="h-4 w-4" />
-                <span className="hidden sm:inline">Impostazioni</span>
-              </Button>
-            )}
             <Button
               variant="outline"
               size="sm"
