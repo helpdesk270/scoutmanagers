@@ -235,6 +235,7 @@ const MemberForm: React.FC<MemberFormProps> = ({ member, onSubmit, onCancel }) =
                       <option value="Gemme">Gemme</option>
                       <option value="Tizzoni">Tizzoni</option>
                       <option value="Esploratori">Esploratori</option>
+                      <option value="Animatori">Animatori</option>
                       <option value="Aquile">Aquile</option>
                       <option value="Leoni">Leoni</option>
                     </select>

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth, UserRole } from "../context/AuthContext";
@@ -179,7 +178,10 @@ const Registrazione = () => {
                       <SelectValue placeholder="Seleziona unità" />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="Gemme">Gemme</SelectItem>
                       <SelectItem value="Tizzoni">Tizzoni</SelectItem>
+                      <SelectItem value="Esploratori">Esploratori</SelectItem>
+                      <SelectItem value="Animatori">Animatori</SelectItem>
                       <SelectItem value="Aquile">Aquile</SelectItem>
                       <SelectItem value="Leoni">Leoni</SelectItem>
                     </SelectContent>
