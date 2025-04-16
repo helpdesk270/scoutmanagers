@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   Card,
@@ -145,9 +146,11 @@ const PercorsoTab: React.FC<PercorsoTabProps> = ({
             </div>
           </div>
           
-          {selectedAgeGroup === "tizzoni" ? (
+          {selectedAgeGroup === "tizzoni" && (
             <TizzoniChecklist />
-          ) : (
+          )}
+          
+          {selectedAgeGroup !== "tizzoni" && (
             <div className="mt-8 space-y-4">
               <h3 className="text-lg font-semibold">Obiettivi formativi</h3>
               <ul className="list-disc pl-5 space-y-2">
@@ -157,15 +160,6 @@ const PercorsoTab: React.FC<PercorsoTabProps> = ({
                     <li>Crescita spirito di gruppo</li>
                     <li>Scoperta della natura</li>
                     <li>Autonomia di base</li>
-                  </>
-                )}
-                {selectedAgeGroup === "tizzoni" && (
-                  <>
-                    <li>Gioco comunitario</li>
-                    <li>Sviluppo responsabilità</li>
-                    <li>Conoscenza dell'ambiente</li>
-                    <li>Creatività e manualità</li>
-                    <li>Partecipazione alla vita del gruppo</li>
                   </>
                 )}
                 {selectedAgeGroup === "esploratori" && (
