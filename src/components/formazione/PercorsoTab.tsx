@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   Card,
@@ -11,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import TizzoniChecklist from "./TizzoniChecklist";
+import ScintillaChecklist from "./ScintillaChecklist";
 
 // Tipi de grupos de idade
 type AgeGroup = "gemme" | "tizzoni" | "esploratori" | "animatori";
@@ -54,6 +54,8 @@ const PercorsoTab: React.FC<PercorsoTabProps> = ({
   setSelectedAgeGroup,
   isAdmin
 }) => {
+  const [selectedLevel, setSelectedLevel] = React.useState<string | null>(null);
+
   return (
     <div className="flex flex-col gap-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -131,12 +133,19 @@ const PercorsoTab: React.FC<PercorsoTabProps> = ({
         </CardHeader>
         <CardContent>
           <div className="relative py-10">
-            {/* Progress path visualization */}
             <div className="absolute top-1/2 left-0 right-0 h-1 bg-gray-200 -translate-y-1/2"></div>
             <div className="flex justify-between relative">
               {progressionPaths[selectedAgeGroup].map((level, index) => (
-                <div key={index} className="flex flex-col items-center relative">
-                  <div className={cn("w-6 h-6 rounded-full border-2 border-white shadow-md", level.color)}></div>
+                <div 
+                  key={index} 
+                  className="flex flex-col items-center relative"
+                  onClick={() => setSelectedLevel(level.name)}
+                >
+                  <div className={cn(
+                    "w-6 h-6 rounded-full border-2 border-white shadow-md cursor-pointer",
+                    level.color,
+                    selectedLevel === level.name && "ring-2 ring-offset-2 ring-black"
+                  )}></div>
                   <div className="mt-4 text-center w-24">
                     <p className="font-semibold text-sm">{level.name}</p>
                     <p className="text-xs text-muted-foreground">{level.age}</p>
@@ -146,11 +155,15 @@ const PercorsoTab: React.FC<PercorsoTabProps> = ({
             </div>
           </div>
           
-          {selectedAgeGroup === "tizzoni" && (
+          {selectedAgeGroup === "tizzoni" && selectedLevel === "Tizzoni" && (
             <TizzoniChecklist />
           )}
+
+          {selectedAgeGroup === "tizzoni" && selectedLevel === "1 Scintilla" && (
+            <ScintillaChecklist />
+          )}
           
-          {selectedAgeGroup !== "tizzoni" && (
+          {(selectedAgeGroup !== "tizzoni" || (!selectedLevel)) && (
             <div className="mt-8 space-y-4">
               <h3 className="text-lg font-semibold">Obiettivi formativi</h3>
               <ul className="list-disc pl-5 space-y-2">
