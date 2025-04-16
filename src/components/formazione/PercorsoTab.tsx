@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   Card,
@@ -10,8 +9,9 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import TizzoniChecklist from "./TizzoniChecklist";
 
-// Tipos de grupos de idade
+// Tipi de grupos de idade
 type AgeGroup = "gemme" | "tizzoni" | "esploratori" | "animatori";
 
 // Data for progression paths
@@ -145,46 +145,50 @@ const PercorsoTab: React.FC<PercorsoTabProps> = ({
             </div>
           </div>
           
-          <div className="mt-8 space-y-4">
-            <h3 className="text-lg font-semibold">Obiettivi formativi</h3>
-            <ul className="list-disc pl-5 space-y-2">
-              {selectedAgeGroup === "gemme" && (
-                <>
-                  <li>Sviluppo relazioni sociali</li>
-                  <li>Crescita spirito di gruppo</li>
-                  <li>Scoperta della natura</li>
-                  <li>Autonomia di base</li>
-                </>
-              )}
-              {selectedAgeGroup === "tizzoni" && (
-                <>
-                  <li>Gioco comunitario</li>
-                  <li>Sviluppo responsabilità</li>
-                  <li>Conoscenza dell'ambiente</li>
-                  <li>Creatività e manualità</li>
-                  <li>Partecipazione alla vita del gruppo</li>
-                </>
-              )}
-              {selectedAgeGroup === "esploratori" && (
-                <>
-                  <li>Tecniche di vita all'aperto</li>
-                  <li>Autonomia e spirito d'avventura</li>
-                  <li>Responsabilità verso la comunità</li>
-                  <li>Sviluppo competenze specializzate</li>
-                  <li>Collaborazione e lavoro di squadra</li>
-                </>
-              )}
-              {selectedAgeGroup === "animatori" && (
-                <>
-                  <li>Leadership e coordinamento</li>
-                  <li>Pianificazione attività</li>
-                  <li>Gestione gruppi</li>
-                  <li>Formazione pedagogica</li>
-                  <li>Amministrazione e organizzazione</li>
-                </>
-              )}
-            </ul>
-          </div>
+          {selectedAgeGroup === "tizzoni" ? (
+            <TizzoniChecklist />
+          ) : (
+            <div className="mt-8 space-y-4">
+              <h3 className="text-lg font-semibold">Obiettivi formativi</h3>
+              <ul className="list-disc pl-5 space-y-2">
+                {selectedAgeGroup === "gemme" && (
+                  <>
+                    <li>Sviluppo relazioni sociali</li>
+                    <li>Crescita spirito di gruppo</li>
+                    <li>Scoperta della natura</li>
+                    <li>Autonomia di base</li>
+                  </>
+                )}
+                {selectedAgeGroup === "tizzoni" && (
+                  <>
+                    <li>Gioco comunitario</li>
+                    <li>Sviluppo responsabilità</li>
+                    <li>Conoscenza dell'ambiente</li>
+                    <li>Creatività e manualità</li>
+                    <li>Partecipazione alla vita del gruppo</li>
+                  </>
+                )}
+                {selectedAgeGroup === "esploratori" && (
+                  <>
+                    <li>Tecniche di vita all'aperto</li>
+                    <li>Autonomia e spirito d'avventura</li>
+                    <li>Responsabilità verso la comunità</li>
+                    <li>Sviluppo competenze specializzate</li>
+                    <li>Collaborazione e lavoro di squadra</li>
+                  </>
+                )}
+                {selectedAgeGroup === "animatori" && (
+                  <>
+                    <li>Leadership e coordinamento</li>
+                    <li>Pianificazione attività</li>
+                    <li>Gestione gruppi</li>
+                    <li>Formazione pedagogica</li>
+                    <li>Amministrazione e organizzazione</li>
+                  </>
+                )}
+              </ul>
+            </div>
+          )}
         </CardContent>
         <CardFooter>
           {isAdmin && (
