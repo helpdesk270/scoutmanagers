@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import TizzoniChecklist from "./TizzoniChecklist";
 import ScintillaChecklist from "./ScintillaChecklist";
+import Scintilla2Checklist from "./Scintilla2Checklist";
+import Scintilla3Checklist from "./Scintilla3Checklist";
 
 // Tipi de grupos de idade
 type AgeGroup = "gemme" | "tizzoni" | "esploratori" | "animatori";
@@ -161,6 +163,14 @@ const PercorsoTab: React.FC<PercorsoTabProps> = ({
 
           {selectedAgeGroup === "tizzoni" && selectedLevel === "1 Scintilla" && (
             <ScintillaChecklist />
+          )}
+
+          {selectedAgeGroup === "tizzoni" && selectedLevel === "2 Scintilla" && (
+            <Scintilla2Checklist />
+          )}
+
+          {selectedAgeGroup === "tizzoni" && selectedLevel === "3 Scintilla" && (
+            <Scintilla3Checklist />
           )}
           
           {(selectedAgeGroup !== "tizzoni" || (!selectedLevel)) && (
