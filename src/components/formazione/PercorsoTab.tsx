@@ -13,11 +13,10 @@ import TizzoniChecklist from "./TizzoniChecklist";
 import ScintillaChecklist from "./ScintillaChecklist";
 import Scintilla2Checklist from "./Scintilla2Checklist";
 import Scintilla3Checklist from "./Scintilla3Checklist";
+import MasterTizzoniChecklist from "./MasterTizzoniChecklist";
 
-// Tipi de grupos de idade
 type AgeGroup = "gemme" | "tizzoni" | "esploratori" | "animatori";
 
-// Data for progression paths
 const progressionPaths = {
   gemme: [
     { name: "Gemme 1", age: "3 anni", color: "bg-scout-green", progress: 0 },
@@ -172,7 +171,11 @@ const PercorsoTab: React.FC<PercorsoTabProps> = ({
           {selectedAgeGroup === "tizzoni" && selectedLevel === "3 Scintilla" && (
             <Scintilla3Checklist />
           )}
-          
+
+          {selectedAgeGroup === "tizzoni" && selectedLevel === "Master Tizzoni" && (
+            <MasterTizzoniChecklist />
+          )}
+
           {(selectedAgeGroup !== "tizzoni" || (!selectedLevel)) && (
             <div className="mt-8 space-y-4">
               <h3 className="text-lg font-semibold">Obiettivi formativi</h3>
