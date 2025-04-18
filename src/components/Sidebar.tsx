@@ -64,9 +64,9 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
       allowed: ["integrante", "animatore", "direttore", "admin"]
     },
     {
-      title: "Comunicazione",
-      icon: <MessageSquare className="h-5 w-5" />,
-      path: "/comunicazione",
+      title: "Materiali",
+      icon: <BookOpen className="h-5 w-5" />,
+      path: "/materiali",
       allowed: ["integrante", "animatore", "direttore", "admin"]
     },
     {

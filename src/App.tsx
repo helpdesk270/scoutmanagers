@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,7 +15,7 @@ import Dashboard from "./pages/Dashboard";
 import Membri from "./pages/Membri";
 import Attivita from "./pages/Attivita";
 import Formazione from "./pages/Formazione";
-import Comunicazione from "./pages/Comunicazione";
+import Materiali from "./pages/Materiali";
 import Risorse from "./pages/Risorse";
 import Rapporti from "./pages/Rapporti";
 import Configurazioni from "./pages/Configurazioni";
@@ -72,10 +73,10 @@ const App = () => (
                 </Sidebar>
               </ProtectedRoute>
             } />
-            <Route path="/comunicazione" element={
+            <Route path="/materiali" element={
               <ProtectedRoute>
                 <Sidebar>
-                  <Comunicazione />
+                  <Materiali />
                 </Sidebar>
               </ProtectedRoute>
             } />

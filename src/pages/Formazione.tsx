@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import {
   Tabs,
@@ -10,8 +9,6 @@ import { useAuth } from "@/context/AuthContext";
 import FormazioneHeader from "@/components/formazione/FormazioneHeader";
 import PercorsoTab from "@/components/formazione/PercorsoTab";
 import EsamiTab from "@/components/formazione/EsamiTab";
-import ProgressiTab from "@/components/formazione/ProgressiTab";
-import MaterialiTab from "@/components/formazione/MaterialiTab";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
@@ -130,11 +127,9 @@ const Formazione: React.FC = () => {
       </Card>
       
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-4 mb-8">
+        <TabsList className="grid w-full grid-cols-2 mb-8">
           <TabsTrigger value="percorso" className="text-xs md:text-sm">Percorso Formativo</TabsTrigger>
           <TabsTrigger value="esami" className="text-xs md:text-sm">Esami e Requisiti</TabsTrigger>
-          <TabsTrigger value="progressi" className="text-xs md:text-sm">Progressi</TabsTrigger>
-          <TabsTrigger value="materiali" className="text-xs md:text-sm">Materiali Didattici</TabsTrigger>
         </TabsList>
         
         <TabsContent value="percorso">
@@ -147,14 +142,6 @@ const Formazione: React.FC = () => {
         
         <TabsContent value="esami">
           <EsamiTab isAdmin={isAdmin} />
-        </TabsContent>
-        
-        <TabsContent value="progressi">
-          <ProgressiTab isAdmin={isAdmin} />
-        </TabsContent>
-        
-        <TabsContent value="materiali">
-          <MaterialiTab isAdmin={isAdmin} />
         </TabsContent>
       </Tabs>
     </div>
