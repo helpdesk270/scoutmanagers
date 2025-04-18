@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
@@ -33,7 +32,6 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
   const isMobile = useIsMobile();
   const [collapsed, setCollapsed] = useState(false);
   
-  // Auto-collapse sidebar on mobile
   useEffect(() => {
     if (isMobile) {
       setCollapsed(true);
@@ -72,12 +70,6 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
       allowed: ["integrante", "animatore", "direttore", "admin"]
     },
     {
-      title: "Finanziario",
-      icon: <DollarSign className="h-5 w-5" />,
-      path: "/finanziario",
-      allowed: ["direttore", "admin"]
-    },
-    {
       title: "Risorse",
       icon: <Package className="h-5 w-5" />,
       path: "/risorse",
@@ -101,7 +93,6 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
     user && item.allowed.includes(user.role)
   );
 
-  // Get user initials for avatar fallback
   const getInitials = (name: string) => {
     return name
       .split(" ")
@@ -195,7 +186,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         className={cn(
           "flex min-h-screen flex-1 flex-col transition-all duration-300",
           collapsed ? "md:pl-16" : "md:pl-64",
-          "pl-0" // No padding on mobile
+          "pl-0"
         )}
       >
         {user && (

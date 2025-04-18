@@ -12,14 +12,24 @@ import PercorsoTab from "@/components/formazione/PercorsoTab";
 import EsamiTab from "@/components/formazione/EsamiTab";
 import ProgressiTab from "@/components/formazione/ProgressiTab";
 import MaterialiTab from "@/components/formazione/MaterialiTab";
+import { Card, CardContent } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
-// Tipos de grupos de idade
 type AgeGroup = "gemme" | "tizzoni" | "esploratori" | "animatori";
 
 const Formazione: React.FC = () => {
   const { user } = useAuth();
   const isAdmin = user?.role === "direttore" || user?.role === "admin" || user?.role === "animatore";
   const [selectedAgeGroup, setSelectedAgeGroup] = useState<AgeGroup>("esploratori");
+  const [selectedMember, setSelectedMember] = useState<string>("");
+  
+  const mockMembers = [
+    { id: "1", name: "Marco Rossi", unit: "Tizzoni" },
+    { id: "2", name: "Lucia Verdi", unit: "Gemme" },
+    { id: "3", name: "Giovanni Bianchi", unit: "Esploratori" },
+    // Add more mock members as needed
+  ];
   
   return (
     <div className="container max-w-full overflow-x-hidden py-8">
@@ -27,6 +37,28 @@ const Formazione: React.FC = () => {
         title="Formazione" 
         description="Gestione del percorso formativo e progressione dei membri" 
       />
+
+      <Card className="mb-6">
+        <CardContent className="pt-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="member-select">Seleziona Membro</Label>
+              <Select value={selectedMember} onValueChange={setSelectedMember}>
+                <SelectTrigger id="member-select">
+                  <SelectValue placeholder="Seleziona un membro" />
+                </SelectTrigger>
+                <SelectContent>
+                  {mockMembers.map((member) => (
+                    <SelectItem key={member.id} value={member.id}>
+                      {member.name} - {member.unit}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
       
       <Tabs defaultValue="percorso" className="w-full">
         <TabsList className="grid w-full grid-cols-4 mb-8">
@@ -36,7 +68,6 @@ const Formazione: React.FC = () => {
           <TabsTrigger value="materiali" className="text-xs md:text-sm">Materiali Didattici</TabsTrigger>
         </TabsList>
         
-        {/* Percorso Formativo Tab */}
         <TabsContent value="percorso">
           <PercorsoTab 
             selectedAgeGroup={selectedAgeGroup} 
@@ -45,17 +76,14 @@ const Formazione: React.FC = () => {
           />
         </TabsContent>
         
-        {/* Esami e Requisiti Tab */}
         <TabsContent value="esami">
           <EsamiTab isAdmin={isAdmin} />
         </TabsContent>
         
-        {/* Progressi Tab */}
         <TabsContent value="progressi">
           <ProgressiTab isAdmin={isAdmin} />
         </TabsContent>
         
-        {/* Materiali Didattici Tab */}
         <TabsContent value="materiali">
           <MaterialiTab isAdmin={isAdmin} />
         </TabsContent>

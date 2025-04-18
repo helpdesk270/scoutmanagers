@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -16,7 +15,6 @@ import Membri from "./pages/Membri";
 import Attivita from "./pages/Attivita";
 import Formazione from "./pages/Formazione";
 import Comunicazione from "./pages/Comunicazione";
-import Finanziario from "./pages/Finanziario";
 import Risorse from "./pages/Risorse";
 import Rapporti from "./pages/Rapporti";
 import Configurazioni from "./pages/Configurazioni";
@@ -78,13 +76,6 @@ const App = () => (
               <ProtectedRoute>
                 <Sidebar>
                   <Comunicazione />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/finanziario" element={
-              <ProtectedRoute allowedRoles={["direttore", "admin"]}>
-                <Sidebar>
-                  <Finanziario />
                 </Sidebar>
               </ProtectedRoute>
             } />
