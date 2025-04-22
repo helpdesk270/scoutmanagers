@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
@@ -16,7 +17,12 @@ import {
   Settings,
   LogOut,
   Menu,
-  BookOpen
+  BookOpen,
+  FileText,
+  BookOpen as PercorsoIcon,
+  Award as SpecialitaIcon,
+  BarChart3 as RapportiIcon,
+  Printer
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -31,49 +37,82 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
   const location = useLocation();
   const isMobile = useIsMobile();
   const [collapsed, setCollapsed] = useState(false);
+  const [segreteriaOpen, setSegreteriaOpen] = useState(false);
   
   useEffect(() => {
     if (isMobile) {
       setCollapsed(true);
     }
-  }, [isMobile]);
+
+    // Check if on a segreteria page to open submenu
+    if (location.pathname.includes("/segreteria")) {
+      setSegreteriaOpen(true);
+    }
+  }, [isMobile, location.pathname]);
 
   const navigationItems = [
     {
       title: "Dashboard",
       icon: <Home className="h-5 w-5" />,
       path: "/dashboard",
-      allowed: ["integrante", "animatore", "direttore", "admin"]
+      allowed: ["integrante", "animatore", "direttore", "admin", "accompagnatore"]
     },
     {
-      title: "Membri",
+      title: "SEGRETERIA",
       icon: <Users className="h-5 w-5" />,
-      path: "/membri",
-      allowed: ["animatore", "direttore", "admin"]
+      path: "/segreteria",
+      allowed: ["animatore", "direttore", "admin"],
+      submenu: [
+        {
+          title: "Registrazione Membri",
+          icon: <Users className="h-4 w-4" />,
+          path: "/segreteria/membri",
+        },
+        {
+          title: "Registrazione Percorso",
+          icon: <PercorsoIcon className="h-4 w-4" />,
+          path: "/segreteria/percorso",
+        },
+        {
+          title: "Registrazione Specialità",
+          icon: <SpecialitaIcon className="h-4 w-4" />,
+          path: "/segreteria/specialita",
+        },
+        {
+          title: "Rapporti",
+          icon: <RapportiIcon className="h-4 w-4" />,
+          path: "/segreteria/rapporti",
+        },
+        {
+          title: "Stampa",
+          icon: <Printer className="h-4 w-4" />,
+          path: "/segreteria/stampa",
+        }
+      ]
     },
     {
       title: "Attività",
       icon: <Calendar className="h-5 w-5" />,
       path: "/attivita",
-      allowed: ["integrante", "animatore", "direttore", "admin"]
+      allowed: ["integrante", "animatore", "direttore", "admin", "accompagnatore"]
     },
     {
       title: "Formazione",
       icon: <Award className="h-5 w-5" />,
       path: "/formazione",
-      allowed: ["integrante", "animatore", "direttore", "admin"]
+      allowed: ["integrante", "animatore", "direttore", "admin", "accompagnatore"]
     },
     {
       title: "Materiali",
       icon: <BookOpen className="h-5 w-5" />,
       path: "/materiali",
-      allowed: ["integrante", "animatore", "direttore", "admin"]
+      allowed: ["integrante", "animatore", "direttore", "admin", "accompagnatore"]
     },
     {
       title: "Risorse",
       icon: <Package className="h-5 w-5" />,
       path: "/risorse",
-      allowed: ["animatore", "direttore", "admin"]
+      allowed: ["animatore", "direttore", "admin", "accompagnatore"]
     },
     {
       title: "Rapporti",
@@ -144,20 +183,90 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         <div className="flex-1 overflow-auto py-4">
           <nav className="space-y-1 px-2">
             {filteredNavigation.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={cn(
-                  "flex items-center rounded-md px-3 py-2 text-sm transition-colors",
-                  location.pathname === item.path
-                    ? "bg-primary text-primary-foreground"
-                    : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+              <React.Fragment key={item.path}>
+                {item.submenu ? (
+                  <div className="space-y-1">
+                    <Link
+                      to={item.path}
+                      className={cn(
+                        "flex items-center rounded-md px-3 py-2 text-sm transition-colors",
+                        location.pathname === item.path
+                          ? "bg-primary text-primary-foreground"
+                          : location.pathname.includes(item.path)
+                          ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                          : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                        !collapsed && "justify-between"
+                      )}
+                      onClick={(e) => {
+                        if (collapsed) {
+                          e.preventDefault();
+                          setSegreteriaOpen(!segreteriaOpen);
+                        } else {
+                          setSegreteriaOpen(!segreteriaOpen);
+                        }
+                      }}
+                    >
+                      <div className="flex items-center">
+                        {item.icon}
+                        {!collapsed && <span className="ml-3">{item.title}</span>}
+                      </div>
+                      {!collapsed && (
+                        <div className={`transform transition-transform ${segreteriaOpen ? 'rotate-90' : ''}`}>
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M6 12L10 8L6 4"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </div>
+                      )}
+                    </Link>
+                    
+                    {(segreteriaOpen || location.pathname.includes(item.path)) && (
+                      <div className={cn("mt-1 space-y-1", collapsed ? "pl-2" : "pl-5")}>
+                        {item.submenu.map((subItem) => (
+                          <Link
+                            key={subItem.path}
+                            to={subItem.path}
+                            className={cn(
+                              "flex items-center rounded-md px-3 py-2 text-sm transition-colors",
+                              location.pathname === subItem.path
+                                ? "bg-primary text-primary-foreground"
+                                : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                            )}
+                          >
+                            {subItem.icon}
+                            {!collapsed && <span className="ml-3">{subItem.title}</span>}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <Link
+                    to={item.path}
+                    className={cn(
+                      "flex items-center rounded-md px-3 py-2 text-sm transition-colors",
+                      location.pathname === item.path
+                        ? "bg-primary text-primary-foreground"
+                        : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                    )}
+                    onClick={() => isMobile && setCollapsed(true)}
+                  >
+                    {item.icon}
+                    {!collapsed && <span className="ml-3">{item.title}</span>}
+                  </Link>
                 )}
-                onClick={() => isMobile && setCollapsed(true)}
-              >
-                {item.icon}
-                {!collapsed && <span className="ml-3">{item.title}</span>}
-              </Link>
+              </React.Fragment>
             ))}
           </nav>
         </div>

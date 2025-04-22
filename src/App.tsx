@@ -12,7 +12,7 @@ import Sidebar from "@/components/Sidebar";
 import Login from "./pages/Login";
 import Registrazione from "./pages/Registrazione";
 import Dashboard from "./pages/Dashboard";
-import Membri from "./pages/Membri";
+import Segreteria from "./pages/Segreteria";
 import Attivita from "./pages/Attivita";
 import Formazione from "./pages/Formazione";
 import Materiali from "./pages/Materiali";
@@ -21,6 +21,13 @@ import Rapporti from "./pages/Rapporti";
 import Configurazioni from "./pages/Configurazioni";
 import AccessoDenied from "./pages/AccessoDenied";
 import NotFound from "./pages/NotFound";
+
+// Segreteria pages
+import RegistrazioneMembri from "./pages/segreteria/Membros";
+import RegistrazionePercorso from "./pages/segreteria/RegistrazionePercorso";
+import RegistrazioneSpecialita from "./pages/segreteria/RegistrazioneSpecialita";
+import RapportiSegreteria from "./pages/segreteria/Rapporti";
+import Impressao from "./pages/segreteria/Impressao";
 
 const queryClient = new QueryClient();
 
@@ -52,10 +59,45 @@ const App = () => (
                 </Sidebar>
               </ProtectedRoute>
             } />
-            <Route path="/membri" element={
+            <Route path="/segreteria" element={
               <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
                 <Sidebar>
-                  <Membri />
+                  <Segreteria />
+                </Sidebar>
+              </ProtectedRoute>
+            } />
+            <Route path="/segreteria/membri" element={
+              <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
+                <Sidebar>
+                  <RegistrazioneMembri />
+                </Sidebar>
+              </ProtectedRoute>
+            } />
+            <Route path="/segreteria/percorso" element={
+              <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
+                <Sidebar>
+                  <RegistrazionePercorso />
+                </Sidebar>
+              </ProtectedRoute>
+            } />
+            <Route path="/segreteria/specialita" element={
+              <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
+                <Sidebar>
+                  <RegistrazioneSpecialita />
+                </Sidebar>
+              </ProtectedRoute>
+            } />
+            <Route path="/segreteria/rapporti" element={
+              <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
+                <Sidebar>
+                  <RapportiSegreteria />
+                </Sidebar>
+              </ProtectedRoute>
+            } />
+            <Route path="/segreteria/stampa" element={
+              <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
+                <Sidebar>
+                  <Impressao />
                 </Sidebar>
               </ProtectedRoute>
             } />
