@@ -33,11 +33,11 @@ const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({ members, filename
     >
       {({ loading }) => (
         loading ? 
-          "Generazione PDF..." : 
-          <React.Fragment>
+          <span>Generazione PDF...</span> : 
+          <span>
             <Printer className="mr-2 h-4 w-4" />
             Scarica PDF
-          </React.Fragment>
+          </span>
       )}
     </PDFDownloadLink>
   );
