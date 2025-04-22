@@ -48,6 +48,12 @@
   color: #888;
 }
 
+body {
+  background-color: #F4F4F4;
+  margin: 0;
+  padding: 0;
+}
+
 /* Mobile optimizations */
 @media (max-width: 767px) {
   .container {

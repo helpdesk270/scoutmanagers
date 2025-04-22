@@ -88,7 +88,8 @@ export default {
           text: "#1A1D1F",
           muted: "#6F767E",
           border: "#E8E8E8",
-          background: "#F4F4F4"
+          background: "#F4F4F4",
+          sidebar: "#1A1D1F"
         }
       },
       borderRadius: {
