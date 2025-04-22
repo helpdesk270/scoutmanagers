@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
@@ -10,17 +9,14 @@ import {
   Users,
   Calendar,
   Award,
-  FileText,
+  MessageSquare,
+  DollarSign,
   Package,
   BarChart3,
   Settings,
   LogOut,
   Menu,
-  BookOpen,
-  UserPlus,
-  BookCheck,
-  ClipboardCheck,
-  Printer
+  BookOpen
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -50,42 +46,10 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
       allowed: ["integrante", "animatore", "direttore", "admin"]
     },
     {
-      title: "Secretaria",
-      icon: <FileText className="h-5 w-5" />,
-      path: "/secretaria",
-      allowed: ["animatore", "direttore", "admin"],
-      submenu: [
-        {
-          title: "Cadastro Membros",
-          icon: <UserPlus className="h-5 w-5" />,
-          path: "/secretaria/membros",
-          allowed: ["animatore", "direttore", "admin"]
-        },
-        {
-          title: "Cadastro Percurso",
-          icon: <BookCheck className="h-5 w-5" />,
-          path: "/secretaria/percurso",
-          allowed: ["animatore", "direttore", "admin"]
-        },
-        {
-          title: "Cadastro Especialidades",
-          icon: <Award className="h-5 w-5" />,
-          path: "/secretaria/especialidades",
-          allowed: ["animatore", "direttore", "admin"]
-        },
-        {
-          title: "Relatórios",
-          icon: <BarChart3 className="h-5 w-5" />,
-          path: "/secretaria/relatorios",
-          allowed: ["direttore", "admin"]
-        },
-        {
-          title: "Impressão",
-          icon: <Printer className="h-5 w-5" />,
-          path: "/secretaria/impressao",
-          allowed: ["animatore", "direttore", "admin"]
-        }
-      ]
+      title: "Membri",
+      icon: <Users className="h-5 w-5" />,
+      path: "/membri",
+      allowed: ["animatore", "direttore", "admin"]
     },
     {
       title: "Attività",
@@ -137,19 +101,6 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
       .toUpperCase();
   };
 
-  // Check if the current path is within a submenu item
-  const isInSubmenu = (item: any) => {
-    if (!item.submenu) return false;
-    return item.submenu.some((subItem: any) => 
-      location.pathname.startsWith(subItem.path)
-    );
-  };
-
-  // Determine if submenu should be expanded
-  const expandedSubmenu = filteredNavigation.find(item => 
-    item.submenu && (location.pathname === item.path || isInSubmenu(item))
-  );
-
   return (
     <div className="flex min-h-screen w-full">
       <aside
@@ -193,42 +144,20 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         <div className="flex-1 overflow-auto py-4">
           <nav className="space-y-1 px-2">
             {filteredNavigation.map((item) => (
-              <React.Fragment key={item.path}>
-                <Link
-                  to={item.path}
-                  className={cn(
-                    "flex items-center rounded-md px-3 py-2 text-sm transition-colors",
-                    (location.pathname === item.path || isInSubmenu(item))
-                      ? "bg-primary text-primary-foreground"
-                      : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                  )}
-                  onClick={() => isMobile && setCollapsed(true)}
-                >
-                  {item.icon}
-                  {!collapsed && <span className="ml-3">{item.title}</span>}
-                </Link>
-
-                {/* Submenu */}
-                {!collapsed && item.submenu && (location.pathname === item.path || isInSubmenu(item)) && (
-                  <div className="ml-6 mt-1 space-y-1 border-l pl-3">
-                    {item.submenu.map((subItem: any) => (
-                      <Link
-                        key={subItem.path}
-                        to={subItem.path}
-                        className={cn(
-                          "flex items-center rounded-md px-3 py-2 text-sm transition-colors",
-                          location.pathname.startsWith(subItem.path)
-                            ? "bg-primary/10 text-primary"
-                            : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                        )}
-                      >
-                        {subItem.icon}
-                        <span className="ml-3">{subItem.title}</span>
-                      </Link>
-                    ))}
-                  </div>
+              <Link
+                key={item.path}
+                to={item.path}
+                className={cn(
+                  "flex items-center rounded-md px-3 py-2 text-sm transition-colors",
+                  location.pathname === item.path
+                    ? "bg-primary text-primary-foreground"
+                    : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                 )}
-              </React.Fragment>
+                onClick={() => isMobile && setCollapsed(true)}
+              >
+                {item.icon}
+                {!collapsed && <span className="ml-3">{item.title}</span>}
+              </Link>
             ))}
           </nav>
         </div>

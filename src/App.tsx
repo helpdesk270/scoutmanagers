@@ -12,12 +12,7 @@ import Sidebar from "@/components/Sidebar";
 import Login from "./pages/Login";
 import Registrazione from "./pages/Registrazione";
 import Dashboard from "./pages/Dashboard";
-import Secretaria from "./pages/Secretaria";
-import SecretariaMembros from "./pages/secretaria/Membros";
-import SecretariaPercurso from "./pages/secretaria/Percurso";
-import SecretariaEspecialidades from "./pages/secretaria/Especialidades";
-import SecretariaRelatorios from "./pages/secretaria/Relatorios";
-import SecretariaImpressao from "./pages/secretaria/Impressao";
+import Membri from "./pages/Membri";
 import Attivita from "./pages/Attivita";
 import Formazione from "./pages/Formazione";
 import Materiali from "./pages/Materiali";
@@ -57,51 +52,13 @@ const App = () => (
                 </Sidebar>
               </ProtectedRoute>
             } />
-            
-            {/* Secretaria routes */}
-            <Route path="/secretaria" element={
+            <Route path="/membri" element={
               <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
                 <Sidebar>
-                  <Secretaria />
+                  <Membri />
                 </Sidebar>
               </ProtectedRoute>
             } />
-            <Route path="/secretaria/membros" element={
-              <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
-                <Sidebar>
-                  <SecretariaMembros />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/secretaria/percurso" element={
-              <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
-                <Sidebar>
-                  <SecretariaPercurso />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/secretaria/especialidades" element={
-              <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
-                <Sidebar>
-                  <SecretariaEspecialidades />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/secretaria/relatorios" element={
-              <ProtectedRoute allowedRoles={["direttore", "admin"]}>
-                <Sidebar>
-                  <SecretariaRelatorios />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/secretaria/impressao" element={
-              <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
-                <Sidebar>
-                  <SecretariaImpressao />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            
             <Route path="/attivita" element={
               <ProtectedRoute>
                 <Sidebar>
