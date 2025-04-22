@@ -19,6 +19,9 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
+  loading: boolean;
+  isAuthorized: (allowedRoles: UserRole[]) => boolean;
+  register?: (userData: any) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -33,12 +36,14 @@ export const useAuth = () => {
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();
 
   // For demonstration purposes, let's simulate a login without a real backend
   const login = async (email: string, password: string) => {
     try {
+      setLoading(true);
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -93,6 +98,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           description: `Benvenuto, ${user.name}!`,
         });
         navigate("/dashboard");
+        return true;
       } else {
         throw new Error("Credenziali non valide");
       }
@@ -103,6 +109,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         variant: "destructive",
       });
       throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -116,6 +124,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
   };
 
+  const isAuthorized = (allowedRoles: UserRole[]) => {
+    return user ? allowedRoles.includes(user.role) : false;
+  };
+
+  // Placeholder for registration function
+  const register = async (userData: any) => {
+    // This would normally connect to a backend API
+    toast({
+      title: "Registrazione",
+      description: "Funzionalità in fase di sviluppo",
+    });
+    return Promise.resolve();
+  };
+
   React.useEffect(() => {
     // Check if user data exists in localStorage
     const storedUser = localStorage.getItem("user");
@@ -127,6 +149,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         localStorage.removeItem("user");
       }
     }
+    setLoading(false);
   }, []);
 
   return (
@@ -136,6 +159,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         login,
         logout,
         isAuthenticated: !!user,
+        loading,
+        isAuthorized,
+        register
       }}
     >
       {children}

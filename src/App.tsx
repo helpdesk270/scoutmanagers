@@ -1,9 +1,8 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/context/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Sidebar from "@/components/Sidebar";
@@ -37,117 +36,115 @@ const App = () => (
       <AuthProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
-          <Routes>
-            {/* Public routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/registrazione" element={<Registrazione />} />
-            <Route path="/accesso-negato" element={<AccessoDenied />} />
+        <Routes>
+          {/* Public routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/registrazione" element={<Registrazione />} />
+          <Route path="/accesso-negato" element={<AccessoDenied />} />
 
-            {/* Protected routes */}
-            <Route path="/" element={
-              <ProtectedRoute>
-                <Sidebar>
-                  <Dashboard />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/dashboard" element={
-              <ProtectedRoute>
-                <Sidebar>
-                  <Dashboard />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/segreteria" element={
-              <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
-                <Sidebar>
-                  <Segreteria />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/segreteria/membri" element={
-              <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
-                <Sidebar>
-                  <RegistrazioneMembri />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/segreteria/percorso" element={
-              <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
-                <Sidebar>
-                  <RegistrazionePercorso />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/segreteria/specialita" element={
-              <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
-                <Sidebar>
-                  <RegistrazioneSpecialita />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/segreteria/rapporti" element={
-              <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
-                <Sidebar>
-                  <RapportiSegreteria />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/segreteria/stampa" element={
-              <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
-                <Sidebar>
-                  <Impressao />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/attivita" element={
-              <ProtectedRoute>
-                <Sidebar>
-                  <Attivita />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/formazione" element={
-              <ProtectedRoute>
-                <Sidebar>
-                  <Formazione />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/materiali" element={
-              <ProtectedRoute>
-                <Sidebar>
-                  <Materiali />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/risorse" element={
-              <ProtectedRoute>
-                <Sidebar>
-                  <Risorse />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/rapporti" element={
-              <ProtectedRoute allowedRoles={["direttore", "admin"]}>
-                <Sidebar>
-                  <Rapporti />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
-            <Route path="/configurazioni" element={
-              <ProtectedRoute allowedRoles={["direttore", "admin"]}>
-                <Sidebar>
-                  <Configurazioni />
-                </Sidebar>
-              </ProtectedRoute>
-            } />
+          {/* Protected routes */}
+          <Route path="/" element={
+            <ProtectedRoute>
+              <Sidebar>
+                <Dashboard />
+              </Sidebar>
+            </ProtectedRoute>
+          } />
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <Sidebar>
+                <Dashboard />
+              </Sidebar>
+            </ProtectedRoute>
+          } />
+          <Route path="/segreteria" element={
+            <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
+              <Sidebar>
+                <Segreteria />
+              </Sidebar>
+            </ProtectedRoute>
+          } />
+          <Route path="/segreteria/membri" element={
+            <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
+              <Sidebar>
+                <RegistrazioneMembri />
+              </Sidebar>
+            </ProtectedRoute>
+          } />
+          <Route path="/segreteria/percorso" element={
+            <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
+              <Sidebar>
+                <RegistrazionePercorso />
+              </Sidebar>
+            </ProtectedRoute>
+          } />
+          <Route path="/segreteria/specialita" element={
+            <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
+              <Sidebar>
+                <RegistrazioneSpecialita />
+              </Sidebar>
+            </ProtectedRoute>
+          } />
+          <Route path="/segreteria/rapporti" element={
+            <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
+              <Sidebar>
+                <RapportiSegreteria />
+              </Sidebar>
+            </ProtectedRoute>
+          } />
+          <Route path="/segreteria/stampa" element={
+            <ProtectedRoute allowedRoles={["animatore", "direttore", "admin"]}>
+              <Sidebar>
+                <Impressao />
+              </Sidebar>
+            </ProtectedRoute>
+          } />
+          <Route path="/attivita" element={
+            <ProtectedRoute>
+              <Sidebar>
+                <Attivita />
+              </Sidebar>
+            </ProtectedRoute>
+          } />
+          <Route path="/formazione" element={
+            <ProtectedRoute>
+              <Sidebar>
+                <Formazione />
+              </Sidebar>
+            </ProtectedRoute>
+          } />
+          <Route path="/materiali" element={
+            <ProtectedRoute>
+              <Sidebar>
+                <Materiali />
+              </Sidebar>
+            </ProtectedRoute>
+          } />
+          <Route path="/risorse" element={
+            <ProtectedRoute>
+              <Sidebar>
+                <Risorse />
+              </Sidebar>
+            </ProtectedRoute>
+          } />
+          <Route path="/rapporti" element={
+            <ProtectedRoute allowedRoles={["direttore", "admin"]}>
+              <Sidebar>
+                <Rapporti />
+              </Sidebar>
+            </ProtectedRoute>
+          } />
+          <Route path="/configurazioni" element={
+            <ProtectedRoute allowedRoles={["direttore", "admin"]}>
+              <Sidebar>
+                <Configurazioni />
+              </Sidebar>
+            </ProtectedRoute>
+          } />
 
-            {/* Catch-all route */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+          {/* Catch-all route */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
