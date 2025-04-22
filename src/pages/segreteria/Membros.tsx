@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { 
@@ -44,7 +43,7 @@ import {
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MemberType } from "@/types/member"; 
+import { MemberType, Achievement, AttendanceRecord } from "@/types/member"; 
 import MemberDetails from "@/components/secretaria/MemberDetails";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import PDFGenerator from "@/components/secretaria/PDFGenerator";
@@ -265,7 +264,6 @@ const Membros = () => {
   const applyFilters = (query: string, unit: string | null, memberType: "bambini" | "animatori" | "accompagnatore" | null) => {
     let filtered = members;
     
-    // Apply search query filter
     if (query) {
       filtered = filtered.filter(member => 
         member.name.toLowerCase().includes(query.toLowerCase()) || 
@@ -275,12 +273,10 @@ const Membros = () => {
       );
     }
     
-    // Apply unit filter
     if (unit) {
       filtered = filtered.filter(member => member.unitName === unit);
     }
     
-    // Apply member type filter
     if (memberType) {
       filtered = filtered.filter(member => member.memberType === memberType);
     }
@@ -336,9 +332,12 @@ const Membros = () => {
   };
 
   const handleAddAchievement = (memberId: string, achievement: Omit<Achievement, "id">) => {
-    const newAchievement = {
+    const newAchievement: Achievement = {
       ...achievement,
-      id: String(Date.now())
+      id: String(Date.now()),
+      name: achievement.name || "",
+      date: achievement.date || "",
+      description: achievement.description || ""
     };
     
     const updatedMembers = members.map(member => {
@@ -368,9 +367,12 @@ const Membros = () => {
   };
 
   const handleAddAttendance = (memberId: string, record: Omit<AttendanceRecord, "id">) => {
-    const newRecord = {
+    const newRecord: AttendanceRecord = {
       ...record,
-      id: String(Date.now())
+      id: String(Date.now()),
+      date: record.date || "",
+      activity: record.activity || "",
+      present: record.present || false
     };
     
     const updatedMembers = members.map(member => {

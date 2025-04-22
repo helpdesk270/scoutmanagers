@@ -41,7 +41,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const { toast } = useToast();
 
   // For demonstration purposes, let's simulate a login without a real backend
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string): Promise<void> => {
     try {
       setLoading(true);
       // Simulate API call
@@ -98,7 +98,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           description: `Benvenuto, ${user.name}!`,
         });
         navigate("/dashboard");
-        return true;
+        return;
       } else {
         throw new Error("Credenziali non valide");
       }

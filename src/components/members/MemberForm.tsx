@@ -1,946 +1,732 @@
-
-import React from "react";
-import { useForm } from "react-hook-form";
-import { 
-  Form, 
-  FormControl, 
-  FormField, 
-  FormItem, 
-  FormLabel, 
-  FormMessage,
-  FormDescription
-} from "@/components/ui/form";
+import React, { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { UserRole } from "@/context/AuthContext";
-import { MemberType } from "@/types/member";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
-import { format } from "date-fns";
-import { it } from "date-fns/locale";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { MemberType } from "@/types/member";
 
 interface MemberFormProps {
   member?: MemberType;
-  onSubmit: (data: Omit<MemberType, "id" | "achievements" | "attendance">) => void;
+  onSubmit: (data: Partial<MemberType>) => void;
   onCancel: () => void;
   initialTab?: "bambini" | "animatori" | "accompagnatore";
 }
 
 const MemberForm: React.FC<MemberFormProps> = ({ member, onSubmit, onCancel, initialTab = "bambini" }) => {
-  const form = useForm({
-    defaultValues: {
-      // Personal data
-      name: member?.name || "",
-      email: member?.email || "",
-      role: member?.role || "integrante" as UserRole,
-      unitName: member?.unitName || "",
-      avatarUrl: member?.avatarUrl || "/placeholder.svg",
-      birthDate: member?.birthDate || undefined,
-      birthPlace: member?.birthPlace || "",
-      address: member?.address || "",
-      phone: member?.phone || "",
-      fiscalCode: member?.fiscalCode || "",
-      
-      // Common
-      memberType: member?.memberType || initialTab,
-      
-      // Health information
-      bloodType: member?.bloodType || "",
-      allergies: member?.allergies || "",
-      medications: member?.medications || "",
-      healthNotes: member?.healthNotes || "",
-      followsMedicalTreatment: member?.followsMedicalTreatment || false,
-      illnesses: member?.illnesses || {
-        rosolia: false,
-        varicella: false,
-        angina: false,
-        febbreReumatica: false,
-        scarlattina: false,
-        pertosse: false,
-        otite: false,
-        morbillo: false,
-        parotite: false
-      },
-      allergyDetails: member?.allergyDetails || "",
-      healthDifficulties: member?.healthDifficulties || "",
-      parentRecommendations: member?.parentRecommendations || "",
-      
-      // Document information
-      documentType: member?.documentType || "cartaIdentita",
-      documentNumber: member?.documentNumber || "",
-      issuedBy: member?.issuedBy || "",
-      
-      // Authorizations
-      photoConsent: member?.photoConsent || false,
-      aisaPhotoConsent: member?.aisaPhotoConsent || false,
-      tripConsent: member?.tripConsent || false,
-      medicalTreatmentConsent: member?.medicalTreatmentConsent || false,
-      dataProcessingConsent: member?.dataProcessingConsent || false,
-      
-      // Parent/Guardian information
-      parentName: member?.parentName || "",
-      parentAddress: member?.parentAddress || "",
-      parentFiscalCode: member?.parentFiscalCode || "",
-      parentPhone: member?.parentPhone || "",
-      
-      // Emergency contacts
-      emergencyContact1Name: member?.emergencyContact1Name || "",
-      emergencyContact1Relation: member?.emergencyContact1Relation || "",
-      emergencyContact1Phone: member?.emergencyContact1Phone || "",
-      emergencyContact2Name: member?.emergencyContact2Name || "",
-      emergencyContact2Relation: member?.emergencyContact2Relation || "",
-      emergencyContact2Phone: member?.emergencyContact2Phone || "",
-    }
+  const [name, setName] = useState(member?.name || "");
+  const [email, setEmail] = useState(member?.email || "");
+  const [role, setRole] = useState(member?.role || "integrante");
+  const [unitName, setUnitName] = useState(member?.unitName || "");
+  const [avatarUrl, setAvatarUrl] = useState(member?.avatarUrl || "");
+  const [birthDate, setBirthDate] = useState<Date | undefined>(member?.birthDate);
+  const [birthPlace, setBirthPlace] = useState(member?.birthPlace || "");
+  const [address, setAddress] = useState(member?.address || "");
+  const [phone, setPhone] = useState(member?.phone || "");
+  const [fiscalCode, setFiscalCode] = useState(member?.fiscalCode || "");
+  const [memberType, setMemberType] = useState<"bambini" | "animatori" | "accompagnatore">(member?.memberType || initialTab);
+  const [documentType, setDocumentType] = useState<"cartaIdentita" | "patente" | "passaporto">(member?.documentType || "cartaIdentita");
+  const [documentNumber, setDocumentNumber] = useState(member?.documentNumber || "");
+  const [issuedBy, setIssuedBy] = useState(member?.issuedBy || "");
+  const [bloodType, setBloodType] = useState(member?.bloodType || "");
+  const [allergies, setAllergies] = useState(member?.allergies || "");
+  const [medications, setMedications] = useState(member?.medications || "");
+  const [healthNotes, setHealthNotes] = useState(member?.healthNotes || "");
+  const [followsMedicalTreatment, setFollowsMedicalTreatment] = useState(member?.followsMedicalTreatment || false);
+  const [illnesses, setIllnesses] = useState(member?.illnesses || {
+    rosolia: false,
+    varicella: false,
+    angina: false,
+    febbreReumatica: false,
+    scarlattina: false,
+    pertosse: false,
+    otite: false,
+    morbillo: false,
+    parotite: false
   });
+  const [allergyDetails, setAllergyDetails] = useState(member?.allergyDetails || "");
+  const [healthDifficulties, setHealthDifficulties] = useState(member?.healthDifficulties || "");
+  const [parentRecommendations, setParentRecommendations] = useState(member?.parentRecommendations || "");
+  const [photoConsent, setPhotoConsent] = useState(member?.photoConsent || false);
+  const [aisaPhotoConsent, setAisaPhotoConsent] = useState(member?.aisaPhotoConsent || false);
+  const [tripConsent, setTripConsent] = useState(member?.tripConsent || false);
+  const [medicalTreatmentConsent, setMedicalTreatmentConsent] = useState(member?.medicalTreatmentConsent || false);
+  const [dataProcessingConsent, setDataProcessingConsent] = useState(member?.dataProcessingConsent || false);
+  const [parentName, setParentName] = useState(member?.parentName || "");
+  const [parentAddress, setParentAddress] = useState(member?.parentAddress || "");
+  const [parentFiscalCode, setParentFiscalCode] = useState(member?.parentFiscalCode || "");
+  const [parentPhone, setParentPhone] = useState(member?.parentPhone || "");
+  const [emergencyContact1Name, setEmergencyContact1Name] = useState(member?.emergencyContact1Name || "");
+  const [emergencyContact1Relation, setEmergencyContact1Relation] = useState(member?.emergencyContact1Relation || "");
+  const [emergencyContact1Phone, setEmergencyContact1Phone] = useState(member?.emergencyContact1Phone || "");
+  const [emergencyContact2Name, setEmergencyContact2Name] = useState(member?.emergencyContact2Name || "");
+  const [emergencyContact2Relation, setEmergencyContact2Relation] = useState(member?.emergencyContact2Relation || "");
+  const [emergencyContact2Phone, setEmergencyContact2Phone] = useState(member?.emergencyContact2Phone || "");
 
-  const handleSubmit = (data: any) => {
-    onSubmit(data);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData: Partial<MemberType> = {
+      name,
+      email,
+      role,
+      unitName,
+      avatarUrl,
+      birthDate,
+      birthPlace,
+      address,
+      phone,
+      fiscalCode,
+      memberType,
+      documentType,
+      documentNumber,
+      issuedBy,
+      bloodType,
+      allergies,
+      medications,
+      healthNotes,
+      followsMedicalTreatment,
+      illnesses,
+      allergyDetails,
+      healthDifficulties,
+      parentRecommendations,
+      photoConsent,
+      aisaPhotoConsent,
+      tripConsent,
+      medicalTreatmentConsent,
+      dataProcessingConsent,
+      parentName,
+      parentAddress,
+      parentFiscalCode,
+      parentPhone,
+      emergencyContact1Name,
+      emergencyContact1Relation,
+      emergencyContact1Phone,
+      emergencyContact2Name,
+      emergencyContact2Relation,
+      emergencyContact2Phone,
+    };
+    onSubmit(formData);
   };
 
-  const memberType = form.watch("memberType");
-
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-        <Tabs defaultValue={initialTab} onValueChange={(value) => form.setValue("memberType", value)}>
-          <TabsList className="grid grid-cols-3 mb-4">
-            <TabsTrigger value="bambini">Bambino</TabsTrigger>
-            <TabsTrigger value="animatori">Animatore</TabsTrigger>
-            <TabsTrigger value="accompagnatore">Accompagnatore</TabsTrigger>
-          </TabsList>
-          
-          <div className="space-y-4 border p-4 rounded-md mb-4">
-            <h3 className="font-medium">Dati Personali</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Nome completo</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Nome e cognome" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input type="email" placeholder="email@example.com" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>Informazioni generali</CardTitle>
+          <CardDescription>Dati principali del membro</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="name">Nome</Label>
+              <Input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
               />
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="birthDate"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel>Data di nascita</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant={"outline"}
-                            className={cn(
-                              "w-full pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value ? (
-                              format(field.value, "PPP", { locale: it })
-                            ) : (
-                              <span>Seleziona data</span>
-                            )}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="birthPlace"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Luogo di nascita</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Città di nascita" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <FormField
-              control={form.control}
-              name="address"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Indirizzo</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Via Roma 123, 00100 Roma" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="phone"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Telefono</FormLabel>
-                    <FormControl>
-                      <Input placeholder="+39 123 456 7890" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="fiscalCode"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Codice Fiscale</FormLabel>
-                    <FormControl>
-                      <Input placeholder="ABCDEF12G34H567I" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="role"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Ruolo</FormLabel>
-                    <FormControl>
-                      <select 
-                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-                        {...field}
-                      >
-                        <option value="integrante">Integrante</option>
-                        <option value="animatore">Animatore</option>
-                        <option value="direttore">Direttore</option>
-                        <option value="admin">Admin</option>
-                        <option value="accompagnatore">Accompagnatore</option>
-                      </select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="unitName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Unità</FormLabel>
-                    <FormControl>
-                      <select 
-                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-                        {...field}
-                      >
-                        {memberType === "bambini" && (
-                          <>
-                            <option value="Gemme">Gemme</option>
-                            <option value="Tizzoni">Tizzoni</option>
-                            <option value="Esploratori">Esploratori</option>
-                          </>
-                        )}
-                        {memberType === "animatori" && (
-                          <option value="Animatori">Animatori</option>
-                        )}
-                        {memberType === "accompagnatore" && (
-                          <option value="Accompagnatori">Accompagnatori</option>
-                        )}
-                      </select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+            <div>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
           </div>
-          
-          {memberType === "bambini" && (
-            <>
-              <div className="space-y-4 border p-4 rounded-md mb-4">
-                <h3 className="font-medium">Informazioni di Salute</h3>
-                
-                <FormField
-                  control={form.control}
-                  name="followsMedicalTreatment"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>
-                          Segue un trattamento medico
-                        </FormLabel>
-                        <FormDescription>
-                          Il ragazzo/a segue un trattamento medico?
-                        </FormDescription>
-                      </div>
-                    </FormItem>
-                  )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="role">Ruolo</Label>
+              <Select value={role} onValueChange={setRole}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Seleziona un ruolo" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="integrante">Integrante</SelectItem>
+                  <SelectItem value="animatore">Animatore</SelectItem>
+                  <SelectItem value="direttore">Direttore</SelectItem>
+                  <SelectItem value="admin">Admin</SelectItem>
+                  <SelectItem value="accompagnatore">Accompagnatore</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="unitName">Unità</Label>
+              <Input
+                id="unitName"
+                type="text"
+                value={unitName}
+                onChange={(e) => setUnitName(e.target.value)}
+              />
+            </div>
+          </div>
+          <div>
+            <Label htmlFor="avatarUrl">URL Avatar</Label>
+            <Input
+              id="avatarUrl"
+              type="url"
+              value={avatarUrl}
+              onChange={(e) => setAvatarUrl(e.target.value)}
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      {memberType === "bambini" && (
+        <>
+          <Card>
+            <CardHeader>
+              <CardTitle>Informazioni Anagrafiche Bambino</CardTitle>
+              <CardDescription>Dati specifici del bambino</CardDescription>
+            </CardHeader>
+            <CardContent className="grid gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="birthDate">Data di Nascita</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-full justify-start text-left font-normal",
+                          !birthDate && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {birthDate ? format(birthDate, "PPP") : <span>Scegli una data</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="center" side="bottom">
+                      <Calendar
+                        mode="single"
+                        selected={birthDate}
+                        onSelect={setBirthDate}
+                        disabled={(date) =>
+                          date > new Date()
+                        }
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+                <div>
+                  <Label htmlFor="birthPlace">Luogo di Nascita</Label>
+                  <Input
+                    id="birthPlace"
+                    type="text"
+                    value={birthPlace}
+                    onChange={(e) => setBirthPlace(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div>
+                <Label htmlFor="address">Indirizzo</Label>
+                <Input
+                  id="address"
+                  type="text"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
                 />
-                
-                <FormField
-                  control={form.control}
-                  name="bloodType"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Gruppo Sanguigno</FormLabel>
-                      <FormControl>
-                        <select 
-                          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-                          {...field}
-                        >
-                          <option value="">Seleziona</option>
-                          <option value="A+">A+</option>
-                          <option value="A-">A-</option>
-                          <option value="B+">B+</option>
-                          <option value="B-">B-</option>
-                          <option value="AB+">AB+</option>
-                          <option value="AB-">AB-</option>
-                          <option value="0+">0+</option>
-                          <option value="0-">0-</option>
-                        </select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+              </div>
+              <div>
+                <Label htmlFor="fiscalCode">Codice Fiscale</Label>
+                <Input
+                  id="fiscalCode"
+                  type="text"
+                  value={fiscalCode}
+                  onChange={(e) => setFiscalCode(e.target.value)}
                 />
-                
-                <div className="space-y-2">
-                  <FormLabel>Il ragazzo/a ha avuto una di queste malattie?</FormLabel>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-1">
-                    <FormField
-                      control={form.control}
-                      name="illnesses.rosolia"
-                      render={({ field }) => (
-                        <FormItem className="flex items-center space-x-2">
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
-                          </FormControl>
-                          <FormLabel className="text-sm font-normal">Rosolia</FormLabel>
-                        </FormItem>
-                      )}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Informazioni Mediche</CardTitle>
+              <CardDescription>Dettagli sullo stato di salute del bambino</CardDescription>
+            </CardHeader>
+            <CardContent className="grid gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="bloodType">Gruppo Sanguigno</Label>
+                  <Input
+                    id="bloodType"
+                    type="text"
+                    value={bloodType}
+                    onChange={(e) => setBloodType(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="allergies">Allergie</Label>
+                  <Input
+                    id="allergies"
+                    type="text"
+                    value={allergies}
+                    onChange={(e) => setAllergies(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="medications">Farmaci Assunti</Label>
+                  <Input
+                    id="medications"
+                    type="text"
+                    value={medications}
+                    onChange={(e) => setMedications(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="healthNotes">Note sulla Salute</Label>
+                  <Input
+                    id="healthNotes"
+                    type="text"
+                    value={healthNotes}
+                    onChange={(e) => setHealthNotes(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div>
+                <Label htmlFor="allergyDetails">Dettagli Allergie</Label>
+                <Textarea
+                  id="allergyDetails"
+                  value={allergyDetails}
+                  onChange={(e) => setAllergyDetails(e.target.value)}
+                />
+              </div>
+              <div>
+                <Label htmlFor="healthDifficulties">Difficoltà di Salute</Label>
+                <Textarea
+                  id="healthDifficulties"
+                  value={healthDifficulties}
+                  onChange={(e) => setHealthDifficulties(e.target.value)}
+                />
+              </div>
+              <div>
+                <Label htmlFor="parentRecommendations">Raccomandazioni dei Genitori</Label>
+                <Textarea
+                  id="parentRecommendations"
+                  value={parentRecommendations}
+                  onChange={(e) => setParentRecommendations(e.target.value)}
+                />
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="followsMedicalTreatment"
+                  checked={followsMedicalTreatment}
+                  onCheckedChange={(checked) => setFollowsMedicalTreatment(!!checked)}
+                />
+                <Label htmlFor="followsMedicalTreatment">Segue Terapie Mediche</Label>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Malattie</CardTitle>
+              <CardDescription>Storico malattie del bambino</CardDescription>
+            </CardHeader>
+            <CardContent className="grid gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="rosolia"
+                      checked={illnesses.rosolia}
+                      onCheckedChange={(checked) => setIllnesses({ ...illnesses, rosolia: !!checked })}
                     />
-                    
-                    <FormField
-                      control={form.control}
-                      name="illnesses.varicella"
-                      render={({ field }) => (
-                        <FormItem className="flex items-center space-x-2">
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
-                          </FormControl>
-                          <FormLabel className="text-sm font-normal">Varicella</FormLabel>
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <FormField
-                      control={form.control}
-                      name="illnesses.angina"
-                      render={({ field }) => (
-                        <FormItem className="flex items-center space-x-2">
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
-                          </FormControl>
-                          <FormLabel className="text-sm font-normal">Angina</FormLabel>
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <FormField
-                      control={form.control}
-                      name="illnesses.febbreReumatica"
-                      render={({ field }) => (
-                        <FormItem className="flex items-center space-x-2">
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
-                          </FormControl>
-                          <FormLabel className="text-sm font-normal">Febbre Reumatica</FormLabel>
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <FormField
-                      control={form.control}
-                      name="illnesses.scarlattina"
-                      render={({ field }) => (
-                        <FormItem className="flex items-center space-x-2">
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
-                          </FormControl>
-                          <FormLabel className="text-sm font-normal">Scarlattina</FormLabel>
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <FormField
-                      control={form.control}
-                      name="illnesses.pertosse"
-                      render={({ field }) => (
-                        <FormItem className="flex items-center space-x-2">
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
-                          </FormControl>
-                          <FormLabel className="text-sm font-normal">Pertosse</FormLabel>
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <FormField
-                      control={form.control}
-                      name="illnesses.otite"
-                      render={({ field }) => (
-                        <FormItem className="flex items-center space-x-2">
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
-                          </FormControl>
-                          <FormLabel className="text-sm font-normal">Otite</FormLabel>
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <FormField
-                      control={form.control}
-                      name="illnesses.morbillo"
-                      render={({ field }) => (
-                        <FormItem className="flex items-center space-x-2">
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
-                          </FormControl>
-                          <FormLabel className="text-sm font-normal">Morbillo</FormLabel>
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <FormField
-                      control={form.control}
-                      name="illnesses.parotite"
-                      render={({ field }) => (
-                        <FormItem className="flex items-center space-x-2">
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
-                          </FormControl>
-                          <FormLabel className="text-sm font-normal">Parotite</FormLabel>
-                        </FormItem>
-                      )}
-                    />
+                    <Label htmlFor="rosolia">Rosolia</Label>
                   </div>
                 </div>
-                
-                <FormField
-                  control={form.control}
-                  name="allergies"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Allergie</FormLabel>
-                      <FormControl>
-                        <Textarea 
-                          placeholder="Allergie alimentari, ai farmaci, stagionali, ecc."
-                          {...field} 
-                          className="min-h-[80px]"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="allergyDetails"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Dettagli Allergie</FormLabel>
-                      <FormControl>
-                        <Textarea 
-                          placeholder="Precisare la causa delle allergie e il comportamento/procedura da tenere (se automedicazione, segnalarlo)"
-                          {...field} 
-                          className="min-h-[80px]"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="medications"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Farmaci</FormLabel>
-                      <FormControl>
-                        <Textarea 
-                          placeholder="Farmaci che devono essere assunti regolarmente"
-                          {...field}
-                          className="min-h-[80px]"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="healthDifficulties"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Difficoltà di Salute</FormLabel>
-                      <FormControl>
-                        <Textarea 
-                          placeholder="Difficoltà di salute (malattie, incidenti, crisi convulsive, ricoveri, operazioni chirurgiche, riabilitazioni) con date e precauzioni da prendere."
-                          {...field}
-                          className="min-h-[100px]"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="healthNotes"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Note Mediche</FormLabel>
-                      <FormControl>
-                        <Textarea 
-                          placeholder="Altre informazioni mediche rilevanti" 
-                          {...field}
-                          className="min-h-[100px]"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="parentRecommendations"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Raccomandazioni dai Genitori</FormLabel>
-                      <FormControl>
-                        <Textarea 
-                          placeholder="Raccomandazioni utili dai genitori/tutore" 
-                          {...field}
-                          className="min-h-[100px]"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              
-              <div className="space-y-4 border p-4 rounded-md mb-4">
-                <h3 className="font-medium">Informazioni Genitore/Tutore</h3>
-                
-                <FormField
-                  control={form.control}
-                  name="parentName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Nome e Cognome Genitore/Tutore</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Nome completo" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="parentAddress"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Indirizzo Genitore/Tutore</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Via Roma 123, 00100 Roma" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="parentFiscalCode"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Codice Fiscale Genitore/Tutore</FormLabel>
-                        <FormControl>
-                          <Input placeholder="ABCDEF12G34H567I" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="parentPhone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Telefono Genitore/Tutore</FormLabel>
-                        <FormControl>
-                          <Input placeholder="+39 123 456 7890" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="varicella"
+                      checked={illnesses.varicella}
+                      onCheckedChange={(checked) => setIllnesses({ ...illnesses, varicella: !!checked })}
+                    />
+                    <Label htmlFor="varicella">Varicella</Label>
+                  </div>
                 </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="emergencyContact1Name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Nome Contatto Emergenza</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Nome completo" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="emergencyContact1Relation"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Relazione</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Es. Genitore, Tutore" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="emergencyContact1Phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Telefono</FormLabel>
-                        <FormControl>
-                          <Input placeholder="+39 123 456 7890" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="angina"
+                      checked={illnesses.angina}
+                      onCheckedChange={(checked) => setIllnesses({ ...illnesses, angina: !!checked })}
+                    />
+                    <Label htmlFor="angina">Angina</Label>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="febbreReumatica"
+                      checked={illnesses.febbreReumatica}
+                      onCheckedChange={(checked) => setIllnesses({ ...illnesses, febbreReumatica: !!checked })}
+                    />
+                    <Label htmlFor="febbreReumatica">Febbre Reumatica</Label>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="scarlattina"
+                      checked={illnesses.scarlattina}
+                      onCheckedChange={(checked) => setIllnesses({ ...illnesses, scarlattina: !!checked })}
+                    />
+                    <Label htmlFor="scarlattina">Scarlattina</Label>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="pertosse"
+                      checked={illnesses.pertosse}
+                      onCheckedChange={(checked) => setIllnesses({ ...illnesses, pertosse: !!checked })}
+                    />
+                    <Label htmlFor="pertosse">Pertosse</Label>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="otite"
+                      checked={illnesses.otite}
+                      onCheckedChange={(checked) => setIllnesses({ ...illnesses, otite: !!checked })}
+                    />
+                    <Label htmlFor="otite">Otite</Label>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="morbillo"
+                      checked={illnesses.morbillo}
+                      onCheckedChange={(checked) => setIllnesses({ ...illnesses, morbillo: !!checked })}
+                    />
+                    <Label htmlFor="morbillo">Morbillo</Label>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="parotite"
+                      checked={illnesses.parotite}
+                      onCheckedChange={(checked) => setIllnesses({ ...illnesses, parotite: !!checked })}
+                    />
+                    <Label htmlFor="parotite">Parotite</Label>
+                  </div>
                 </div>
               </div>
-              
-              <div className="space-y-4 border p-4 rounded-md mb-4">
-                <h3 className="font-medium">Autorizzazioni</h3>
-                
-                <FormField
-                  control={form.control}
-                  name="dataProcessingConsent"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>
-                          Consenso Trattamento Dati
-                        </FormLabel>
-                        <FormDescription>
-                          Autorizzo il trattamento dei dati personali secondo la normativa vigente.
-                        </FormDescription>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="photoConsent"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>
-                          Consenso Fotografico
-                        </FormLabel>
-                        <FormDescription>
-                          Autorizzo l'uso di foto e video in cui appare il membro per scopi promozionali dell'organizzazione.
-                        </FormDescription>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="aisaPhotoConsent"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>
-                          Consenso Fotografico A.I.S.A
-                        </FormLabel>
-                        <FormDescription>
-                          Concedo l'autorizzazione affinché il minore di cui sopra venga ritratto in foto e/o video utilizzate dall'associazione nell'ambito di attività di comunicazione inerenti all'A.I.S.A.
-                        </FormDescription>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="tripConsent"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>
-                          Consenso per Gite
-                        </FormLabel>
-                        <FormDescription>
-                          Autorizzo la partecipazione a gite ed escursioni organizzate dal gruppo.
-                        </FormDescription>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="medicalTreatmentConsent"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>
-                          Consenso per Trattamento Medico
-                        </FormLabel>
-                        <FormDescription>
-                          Autorizzo il personale a fornire assistenza medica di base e a cercare cure mediche professionali in caso di emergenza.
-                        </FormDescription>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </>
-          )}
-          
-          {(memberType === "animatori" || memberType === "accompagnatore") && (
-            <>
-              <div className="space-y-4 border p-4 rounded-md mb-4">
-                <h3 className="font-medium">Informazioni Documento</h3>
-                
-                <FormField
-                  control={form.control}
-                  name="documentType"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Tipo di Documento</FormLabel>
-                      <FormControl>
-                        <select 
-                          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-                          {...field}
-                        >
-                          <option value="cartaIdentita">Carta d'identità</option>
-                          <option value="patente">Patente</option>
-                          <option value="passaporto">Passaporto</option>
-                        </select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="documentNumber"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Numero Documento</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Numero del documento" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="issuedBy"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Rilasciato da</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Ente che ha rilasciato il documento" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              
-              <div className="space-y-4 border p-4 rounded-md mb-4">
-                <h3 className="font-medium">Autorizzazioni</h3>
-                
-                <FormField
-                  control={form.control}
-                  name="dataProcessingConsent"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>
-                          Consenso Trattamento Dati
-                        </FormLabel>
-                        <FormDescription>
-                          Autorizzo il trattamento dei dati personali secondo la normativa vigente.
-                        </FormDescription>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </>
-          )}
-        </Tabs>
+            </CardContent>
+          </Card>
 
-        <div className="flex justify-end space-x-2 pt-4">
-          <Button type="button" variant="outline" onClick={onCancel}>
-            Annulla
-          </Button>
-          <Button type="submit">
-            {member ? "Aggiorna" : "Aggiungi"} Membro
-          </Button>
-        </div>
-      </form>
-    </Form>
+          <Card>
+            <CardHeader>
+              <CardTitle>Informazioni Genitori</CardTitle>
+              <CardDescription>Dati relativi ai genitori/tutori</CardDescription>
+            </CardHeader>
+            <CardContent className="grid gap-4">
+              <div>
+                <Label htmlFor="parentName">Nome Genitore</Label>
+                <Input
+                  id="parentName"
+                  type="text"
+                  value={parentName}
+                  onChange={(e) => setParentName(e.target.value)}
+                />
+              </div>
+              <div>
+                <Label htmlFor="parentAddress">Indirizzo Genitore</Label>
+                <Input
+                  id="parentAddress"
+                  type="text"
+                  value={parentAddress}
+                  onChange={(e) => setParentAddress(e.target.value)}
+                />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="parentFiscalCode">Codice Fiscale Genitore</Label>
+                  <Input
+                    id="parentFiscalCode"
+                    type="text"
+                    value={parentFiscalCode}
+                    onChange={(e) => setParentFiscalCode(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="parentPhone">Telefono Genitore</Label>
+                  <Input
+                    id="parentPhone"
+                    type="tel"
+                    value={parentPhone}
+                    onChange={(e) => setParentPhone(e.target.value)}
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </>
+      )}
+
+      {memberType === "animatori" && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Informazioni Documento</CardTitle>
+            <CardDescription>Dati relativi al documento identificativo</CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-4">
+            <div>
+              <Label htmlFor="phone">Telefono</Label>
+              <Input
+                id="phone"
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="documentType">Tipo di Documento</Label>
+                <Select value={documentType} onValueChange={setDocumentType}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Seleziona un tipo" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="cartaIdentita">Carta d'Identità</SelectItem>
+                    <SelectItem value="patente">Patente</SelectItem>
+                    <SelectItem value="passaporto">Passaporto</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="documentNumber">Numero di Documento</Label>
+                <Input
+                  id="documentNumber"
+                  type="text"
+                  value={documentNumber}
+                  onChange={(e) => setDocumentNumber(e.target.value)}
+                />
+              </div>
+            </div>
+            <div>
+              <Label htmlFor="issuedBy">Rilasciato da</Label>
+              <Input
+                id="issuedBy"
+                type="text"
+                value={issuedBy}
+                onChange={(e) => setIssuedBy(e.target.value)}
+              />
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {memberType === "accompagnatore" && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Informazioni Accompagnatore</CardTitle>
+            <CardDescription>Dati specifici dell'accompagnatore</CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-4">
+            <div>
+              <Label htmlFor="phone">Telefono</Label>
+              <Input
+                id="phone"
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="documentType">Tipo di Documento</Label>
+                <Select value={documentType} onValueChange={setDocumentType}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Seleziona un tipo" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="cartaIdentita">Carta d'Identità</SelectItem>
+                    <SelectItem value="patente">Patente</SelectItem>
+                    <SelectItem value="passaporto">Passaporto</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="documentNumber">Numero di Documento</Label>
+                <Input
+                  id="documentNumber"
+                  type="text"
+                  value={documentNumber}
+                  onChange={(e) => setDocumentNumber(e.target.value)}
+                />
+              </div>
+            </div>
+            <div>
+              <Label htmlFor="issuedBy">Rilasciato da</Label>
+              <Input
+                id="issuedBy"
+                type="text"
+                value={issuedBy}
+                onChange={(e) => setIssuedBy(e.target.value)}
+              />
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {(memberType === "bambini") && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Contatti di Emergenza</CardTitle>
+            <CardDescription>Informazioni sui contatti in caso di emergenza</CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="emergencyContact1Name">Nome Contatto 1</Label>
+                <Input
+                  id="emergencyContact1Name"
+                  type="text"
+                  value={emergencyContact1Name}
+                  onChange={(e) => setEmergencyContact1Name(e.target.value)}
+                />
+              </div>
+              <div>
+                <Label htmlFor="emergencyContact1Relation">Relazione Contatto 1</Label>
+                <Input
+                  id="emergencyContact1Relation"
+                  type="text"
+                  value={emergencyContact1Relation}
+                  onChange={(e) => setEmergencyContact1Relation(e.target.value)}
+                />
+              </div>
+              <div>
+                <Label htmlFor="emergencyContact1Phone">Telefono Contatto 1</Label>
+                <Input
+                  id="emergencyContact1Phone"
+                  type="tel"
+                  value={emergencyContact1Phone}
+                  onChange={(e) => setEmergencyContact1Phone(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="emergencyContact2Name">Nome Contatto 2</Label>
+                <Input
+                  id="emergencyContact2Name"
+                  type="text"
+                  value={emergencyContact2Name}
+                  onChange={(e) => setEmergencyContact2Name(e.target.value)}
+                />
+              </div>
+              <div>
+                <Label htmlFor="emergencyContact2Relation">Relazione Contatto 2</Label>
+                <Input
+                  id="emergencyContact2Relation"
+                  type="text"
+                  value={emergencyContact2Relation}
+                  onChange={(e) => setEmergencyContact2Relation(e.target.value)}
+                />
+              </div>
+              <div>
+                <Label htmlFor="emergencyContact2Phone">Telefono Contatto 2</Label>
+                <Input
+                  id="emergencyContact2Phone"
+                  type="tel"
+                  value={emergencyContact2Phone}
+                  onChange={(e) => setEmergencyContact2Phone(e.target.value)}
+                />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Consensi</CardTitle>
+          <CardDescription>Autorizzazioni necessarie</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="photoConsent"
+                checked={photoConsent}
+                onCheckedChange={(checked) => setPhotoConsent(!!checked)}
+              />
+              <Label htmlFor="photoConsent">Consenso Foto</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="aisaPhotoConsent"
+                checked={aisaPhotoConsent}
+                onCheckedChange={(checked) => setAisaPhotoConsent(!!checked)}
+              />
+              <Label htmlFor="aisaPhotoConsent">Consenso Foto AISA</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="tripConsent"
+                checked={tripConsent}
+                onCheckedChange={(checked) => setTripConsent(!!checked)}
+              />
+              <Label htmlFor="tripConsent">Consenso Gita</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="medicalTreatmentConsent"
+                checked={medicalTreatmentConsent}
+                onCheckedChange={(checked) => setMedicalTreatmentConsent(!!checked)}
+              />
+              <Label htmlFor="medicalTreatmentConsent">Consenso Trattamento Medico</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="dataProcessingConsent"
+                checked={dataProcessingConsent}
+                onCheckedChange={(checked) => setDataProcessingConsent(!!checked)}
+              />
+              <Label htmlFor="dataProcessingConsent">Consenso al Trattamento dei Dati</Label>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <div className="flex justify-end space-x-2">
+        <Button type="button" variant="secondary" onClick={onCancel}>
+          Annulla
+        </Button>
+        <Button type="submit">Salva</Button>
+      </div>
+    </form>
   );
 };
 

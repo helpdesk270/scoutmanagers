@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { 
   Card, 
@@ -34,13 +33,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Badge } from "@/components/ui/badge";
 
 const Impressao = () => {
   const { toast } = useToast();
   const [selectedMemberType, setSelectedMemberType] = useState<"bambini" | "animatori" | "accompagnatore">("bambini");
   const [selectedForm, setSelectedForm] = useState<"registrazione" | "adesione">("registrazione");
 
-  // Sample members for PDF generation
   const [members, setMembers] = useState<MemberType[]>([
     {
       id: "1",
@@ -197,10 +196,8 @@ const Impressao = () => {
   };
 
   const getFilteredMembers = () => {
-    // Filter by member type
     const typeFiltered = members.filter(m => m.memberType === selectedMemberType);
     
-    // Filter by selected units
     return typeFiltered.filter(m => m.unitName ? selectedUnits[m.unitName] : true);
   };
 
@@ -216,8 +213,6 @@ const Impressao = () => {
       return;
     }
 
-    // This would open the download dialog through the PDFDownloadLink
-    // In a real application, we'd actually trigger the download here
     toast({
       title: "Download iniziato",
       description: `Il PDF con ${filteredMembers.length} membri sta per essere scaricato.`
