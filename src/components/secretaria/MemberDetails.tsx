@@ -1,4 +1,3 @@
-
 import React from "react";
 import { 
   Card, 
@@ -29,8 +28,7 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/dialog";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import PDFGenerator from "./PDFGenerator";
+import PDFDownloadButton from "./PDFDownloadButton";
 
 interface MemberDetailsProps {
   member: MemberType;
@@ -344,13 +342,10 @@ const MemberDetails: React.FC<MemberDetailsProps> = ({ member, onBack, onEdit, o
             <CardTitle>{member.name}</CardTitle>
           </div>
           <div className="flex gap-2">
-            <PDFDownloadLink 
-              document={<PDFGenerator members={[member]} />} 
-              fileName={`${member.name.replace(/\s+/g, '-').toLowerCase()}-${Date.now()}.pdf`}
-              className="inline-flex h-9 items-center justify-center whitespace-nowrap rounded-md border border-input bg-background px-4 py-2 text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            >
-              Stampa PDF
-            </PDFDownloadLink>
+            <PDFDownloadButton 
+              members={[member]} 
+              filename={`${member.name.replace(/\s+/g, '-').toLowerCase()}-${Date.now()}.pdf`}
+            />
             <Button 
               variant="outline" 
               size="sm"
