@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { MemberType } from "@/pages/Membri";
+import { MemberType } from "@/types/member";
 import { 
   Dialog, 
   DialogContent, 

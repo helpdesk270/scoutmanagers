@@ -15,7 +15,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MemberType } from "@/pages/Membri";
+import { MemberType } from "@/types/member";
 import { 
   Select,
   SelectContent,

@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { MemberType } from "../../pages/Membri";
+import { MemberType } from "@/types/member";
 import MemberList from "@/components/secretaria/MemberList";
 import MemberForm from "@/components/members/MemberForm";
 import { Users, UserPlus, Download, Search } from "lucide-react";

@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useForm } from "react-hook-form";
 import { 
@@ -14,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { UserRole } from "@/context/AuthContext";
-import { MemberType } from "@/pages/Membri";
+import { MemberType } from "@/types/member";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { format } from "date-fns";
@@ -28,9 +27,10 @@ interface MemberFormProps {
   member?: MemberType;
   onSubmit: (data: Omit<MemberType, "id" | "achievements" | "attendance">) => void;
   onCancel: () => void;
+  initialTab?: "bambini" | "animatori" | "accompagnatore";
 }
 
-const MemberForm: React.FC<MemberFormProps> = ({ member, onSubmit, onCancel }) => {
+const MemberForm: React.FC<MemberFormProps> = ({ member, onSubmit, onCancel, initialTab }) => {
   const form = useForm({
     defaultValues: {
       // Personal data
@@ -72,7 +72,7 @@ const MemberForm: React.FC<MemberFormProps> = ({ member, onSubmit, onCancel }) =
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-        <Tabs defaultValue="personal" className="w-full">
+        <Tabs defaultValue={initialTab || "personal"} className="w-full">
           <TabsList className="grid grid-cols-4 mb-4">
             <TabsTrigger value="personal">Dati Personali</TabsTrigger>
             <TabsTrigger value="health">Salute</TabsTrigger>

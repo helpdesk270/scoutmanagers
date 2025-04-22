@@ -1,6 +1,6 @@
 
 import React from "react";
-import { MemberType } from "@/pages/Membri";
+import { MemberType } from "@/types/member";
 import { 
   Card, 
   CardContent, 
