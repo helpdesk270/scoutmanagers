@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { PDFDownloadLink, BlobProvider } from "@react-pdf/renderer";
+import { BlobProvider } from "@react-pdf/renderer";
 import { Printer } from "lucide-react";
 import PDFGenerator from "./PDFGenerator";
 import { MemberType } from "@/types/member";
