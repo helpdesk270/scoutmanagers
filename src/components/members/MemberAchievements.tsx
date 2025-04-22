@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Achievement, MemberType } from "@/pages/Membri";
+import { Achievement, MemberType } from "@/types/member";
 import { 
   Card, 
   CardContent, 

@@ -1,6 +1,8 @@
 
 import { UserRole } from "@/context/AuthContext";
 
+export { UserRole };
+
 export interface Achievement {
   id: string;
   name: string;

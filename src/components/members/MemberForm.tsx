@@ -23,7 +23,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { MemberType } from "@/types/member";
+import { MemberType, UserRole } from "@/types/member";
 
 interface MemberFormProps {
   member?: MemberType;
@@ -35,7 +35,7 @@ interface MemberFormProps {
 const MemberForm: React.FC<MemberFormProps> = ({ member, onSubmit, onCancel, initialTab = "bambini" }) => {
   const [name, setName] = useState(member?.name || "");
   const [email, setEmail] = useState(member?.email || "");
-  const [role, setRole] = useState(member?.role || "integrante");
+  const [role, setRole] = useState<UserRole>(member?.role || "integrante");
   const [unitName, setUnitName] = useState(member?.unitName || "");
   const [avatarUrl, setAvatarUrl] = useState(member?.avatarUrl || "");
   const [birthDate, setBirthDate] = useState<Date | undefined>(member?.birthDate);
@@ -81,6 +81,14 @@ const MemberForm: React.FC<MemberFormProps> = ({ member, onSubmit, onCancel, ini
   const [emergencyContact2Name, setEmergencyContact2Name] = useState(member?.emergencyContact2Name || "");
   const [emergencyContact2Relation, setEmergencyContact2Relation] = useState(member?.emergencyContact2Relation || "");
   const [emergencyContact2Phone, setEmergencyContact2Phone] = useState(member?.emergencyContact2Phone || "");
+
+  const handleRoleChange = (value: string) => {
+    setRole(value as UserRole);
+  };
+
+  const handleDocumentTypeChange = (value: string) => {
+    setDocumentType(value as "cartaIdentita" | "patente" | "passaporto");
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -160,7 +168,7 @@ const MemberForm: React.FC<MemberFormProps> = ({ member, onSubmit, onCancel, ini
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="role">Ruolo</Label>
-              <Select value={role} onValueChange={setRole}>
+              <Select value={role} onValueChange={handleRoleChange}>
                 <SelectTrigger>
                   <SelectValue placeholder="Seleziona un ruolo" />
                 </SelectTrigger>
@@ -513,7 +521,7 @@ const MemberForm: React.FC<MemberFormProps> = ({ member, onSubmit, onCancel, ini
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="documentType">Tipo di Documento</Label>
-                <Select value={documentType} onValueChange={setDocumentType}>
+                <Select value={documentType} onValueChange={handleDocumentTypeChange}>
                   <SelectTrigger>
                     <SelectValue placeholder="Seleziona un tipo" />
                   </SelectTrigger>
@@ -566,7 +574,7 @@ const MemberForm: React.FC<MemberFormProps> = ({ member, onSubmit, onCancel, ini
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="documentType">Tipo di Documento</Label>
-                <Select value={documentType} onValueChange={setDocumentType}>
+                <Select value={documentType} onValueChange={handleDocumentTypeChange}>
                   <SelectTrigger>
                     <SelectValue placeholder="Seleziona un tipo" />
                   </SelectTrigger>

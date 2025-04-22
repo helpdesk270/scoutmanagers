@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { AttendanceRecord, MemberType } from "@/pages/Membri";
+import { AttendanceRecord, MemberType } from "@/types/member";
 import { 
   Card, 
   CardContent, 
