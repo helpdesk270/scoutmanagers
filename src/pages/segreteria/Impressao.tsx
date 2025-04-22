@@ -1,39 +1,7 @@
-import React, { useState } from "react";
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardHeader, 
-  CardTitle,
-  CardFooter
-} from "@/components/ui/card";
-import { 
-  Tabs, 
-  TabsContent, 
-  TabsList, 
-  TabsTrigger 
-} from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { 
-  Printer, 
-  Download, 
-  FileText, 
-  Users, 
-  CheckCircle 
-} from "lucide-react";
-import { MemberType } from "@/types/member";
+import React from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import { Printer } from "lucide-react";
 import PDFGenerator from "@/components/secretaria/PDFGenerator";
-import { useToast } from "@/hooks/use-toast";
-import { 
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Badge } from "@/components/ui/badge";
 
 const PDFDownloadButton = ({ members, filename }) => {
   return (
@@ -42,13 +10,15 @@ const PDFDownloadButton = ({ members, filename }) => {
       fileName={filename}
       className="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 mt-2 sm:mt-0"
     >
-      {({ loading }) => (
-        loading ? 
-          "Generazione PDF..." : 
+      {(params) => (
+        params.loading ? (
+          "Generazione PDF..."
+        ) : (
           <>
             <Printer className="mr-2 h-4 w-4" />
             Scarica PDF
           </>
+        )
       )}
     </PDFDownloadLink>
   );
